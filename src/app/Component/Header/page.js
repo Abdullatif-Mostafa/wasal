@@ -157,7 +157,7 @@ const Nav = () => {
           {isAuthenticated && (
             <>
               <li>
-                <Link href="/Pages/Chat" className="relative group flex items-center justify-center">
+                <Link href="/Pages/Chat" onClick={() => setDropdownOpen(false)}  className="relative group flex items-center justify-center">
                   <span className="bg-white/90 rounded-full p-2 shadow hover:bg-cyan-100 transition relative">
                     <FaComments className="w-6 h-6 text-teal-600" title="الدردشة" />
                     {chatCount > 0 && (
@@ -169,7 +169,7 @@ const Nav = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/Pages/Notifications" className="relative group flex items-center justify-center">
+                <Link href="/Pages/Notifications" onClick={() => setDropdownOpen(false)} className="relative group flex items-center justify-center">
                   <span className="bg-white/90 rounded-full p-2 shadow hover:bg-cyan-100 transition relative">
                     <FaBell className="w-6 h-6 text-teal-600" title="الإشعارات" />
                     {notificationCount > 0 && (

@@ -17,7 +17,7 @@ const CreatePost = ({ onPost }) => {
   const toastTimeout = useRef(null);
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
-const token = user?.token || localStorage.getItem("token");
+  const token = user?.token || localStorage.getItem("token");
   useEffect(() => {
     if (image) {
       const objectUrl = URL.createObjectURL(image);
@@ -27,29 +27,23 @@ const token = user?.token || localStorage.getItem("token");
       setPreview(null);
     }
   }, [image]);
-
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) setImage(file);
   };
-
   const handlePostSubmit = async () => {
     if (!isAuthenticated || !user?.token) {
       toast.error("يرجى تسجيل الدخول لنشر المحتوى", { rtl: true });
       return;
     }
-
     if (!postText && !image) {
       toast.error("يرجى إضافة نص أو صورة للمنشور", { rtl: true });
       return;
     }
-
     const formData = new FormData();
     formData.append("text", postText);
     if (image) formData.append("image", image);
-
     setLoading(true);
-
     dispatch(addPostAsync({ formData, token })).then((action) => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
       toastTimeout.current = setTimeout(() => {
