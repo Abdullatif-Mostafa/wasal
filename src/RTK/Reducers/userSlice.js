@@ -1,5 +1,5 @@
-"use strict";
-// "use client";
+// "use strict";
+"use client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Get all users

@@ -22,11 +22,9 @@ const Posts = ({ newPost }) => {
   const { user } = useSelector((state) => state.auth);
   console.log(" user in the posts page ", user)
   console.log("Posts from Redux type of ------ ", posts.posts);
-  
   useEffect(() => {
       dispatch(fetchPosts());
   }, [dispatch]);
-
   const allPosts = Array.isArray(posts.posts) ? [...posts.posts] : [];
   if(newPost && (!allPosts.length || allPosts[0]?.id !== newPost.id)) {
     allPosts.unshift(newPost);
@@ -34,7 +32,7 @@ const Posts = ({ newPost }) => {
   const handleSavePost = () => {
     toast.success("تم حفظ المنشور بنجاح!");
   };
-  // const han
+  
   const handleDeletePost = async (postId) => {
     const result = await Swal.fire({
       text: 'هل أنت متأكد من حذف المنشور؟',
@@ -67,7 +65,6 @@ const Posts = ({ newPost }) => {
       dispatch(fetchPosts());
     }
   };
-
   if (loading) return <div style={{ height: "100vh" }} className="w-full h-full text-center text-teal-600 font-bold text-xl rounded-lg  shadow-md mt-7">جاري تحميل المنشورات...</div>;
   if (error) return <div style={{ height: "100vh" }} className="w-full h-full  text-center text-red-600 font-bold text-xl  rounded-lg p-6 shadow-md mt-7">{error}</div>;
   if (!allPosts.length) return <div style={{ height: "100vh" }} className="w-full h-full text-center text-teal-600 font-bold text-lg rounded-lg p-6 shadow-md mt-7">لا توجد منشورات</div>;

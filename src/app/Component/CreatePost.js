@@ -1,4 +1,5 @@
 "use client";
+
 import { addPostAsync } from "@/RTK/Reducers/postSlice";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,8 +17,7 @@ const CreatePost = ({ onPost }) => {
   const toastTimeout = useRef(null);
   const dispatch = useDispatch();
   const { user, isAuthenticated } = useSelector((state) => state.auth);
-  const token = localStorage.getItem("token");
-
+const token = user?.token || localStorage.getItem("token");
   useEffect(() => {
     if (image) {
       const objectUrl = URL.createObjectURL(image);
