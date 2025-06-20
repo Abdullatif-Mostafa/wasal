@@ -148,7 +148,7 @@ const Nav = () => {
         {/* روابط سطح المكتب */}
         <ul className="hidden md:flex space-x-6 items-center">
           <li className="nav-item flex items-center justify-center">
-            <Link className="hover:text-teal-200 transition-colors duration-200 flex items-center justify-center" href="/">
+            <Link onClick={() => setDropdownOpen(false)} className="hover:text-teal-200 transition-colors duration-200 flex items-center justify-center" href="/">
               <span className="bg-white/90 rounded-full p-2 shadow hover:bg-cyan-100 transition">
                 <FaHome className="w-6 h-6 text-teal-600" title="الصفحة الرئيسية" />
               </span>

@@ -69,7 +69,51 @@ export const deletePostAsync = createAsyncThunk(
     return postId;
   }
 );
+export const addLike = createAsyncThunk(
+  'post/likePost',
+  // async (postId) => {
+  //   const res = await fetch(`http://localhost:4000/api/posts/${postId}/likes`, {
+  //     method: 'POST',
+  //   });
+  //   if (!res.ok) throw new Error('فشل في الإعجاب بالمنشور');
+  //   const data = await res.json();
+  //   console.log("Liked post:", data);
+  //    // Assuming the response contains the updated post
+  //   return data;
+  // }
+  async ({ postId, userId, token }, { rejectWithValue }) => {
+    console.log("postId", postId, "userId", userId, "token", token);
+    try {
+      const res = await fetch(`http://localhost:4000/api/posts/${postId}/likes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ userId }),
+      });
+      const data = await res.json();
 
+      console.log("Liked post:", data); // يرجع البوست المحدث
+      console.log("Liked post:", data.post); // يرجع البوست المحدث
+      return data.post;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+)
+export const getaddLike = createAsyncThunk(
+  'post/getLikePost',
+  async (postId) => {
+    const res = await fetch(`http://localhost:4000/api/posts/${postId}/likes`, {
+      method: 'GET',
+    });
+    if (!res.ok) throw new Error('فشل في جلب الإعجابات للمنشور');
+    const data = await res.json();
+    console.log("Fetched likes for post:", data); // Assuming the response contains the likes
+    return data;
+  }
+)
 const initialState = {
   posts: [],
   loading: false,
@@ -122,7 +166,7 @@ const postSlice = createSlice({
         console.error("Error fetching posts:", action.error.message);
       })
       // Add post
-       .addCase(addPostAsync.pending, (state) => {
+      .addCase(addPostAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -149,7 +193,7 @@ const postSlice = createSlice({
       .addCase(fetchPostById.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.selectedPost = action.payload; 
+        state.selectedPost = action.payload;
         console.log("Fetched post by ID successfully:", action.payload);
       })
       .addCase(fetchPostById.rejected, (state, action) => {
@@ -192,7 +236,37 @@ const postSlice = createSlice({
       .addCase(deletePostAsync.rejected, (state, action) => {
         state.error = action.error.message;
         console.error("Error deleting post:", action.error.message);
+      })
+      // Like post
+      .addCase(addLike.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      // .addCase(addLike.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.error = null;
+      //   const likedPost = action.payload; // Assuming the response contains the updated post
+      //   const index = state.posts.findIndex(post => post.id === likedPost.id);
+      //   if (index !== -1) {
+      //     state.posts[index] = likedPost; // Update the post in the state
+      //   }
+      //   console.log("Post liked successfully:", likedPost);
+      // })
+      .addCase(addLike.fulfilled, (state, action) => {
+        const updatedPost = action.payload;
+        const index = state.posts.findIndex(post => post._id === updatedPost._id);
+        if (index !== -1) {
+          state.posts[index] = updatedPost;
+        }
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(addLike.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+        console.error("Error liking post:", action.error.message);
       });
+
   },
 });
 export const { setPosts, addPost, editPosst, deletePost, setPostLoading, setPostError } = postSlice.actions;
