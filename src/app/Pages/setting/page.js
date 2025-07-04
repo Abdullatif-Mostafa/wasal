@@ -184,7 +184,7 @@ return (
             <div className="flex items-center gap-4">
               <FaLock className="text-cyan-400" />
               <span className="text-cyan-900">تغيير كلمة المرور</span>
-              <button className="ml-auto px-3 py-1 rounded-lg bg-cyan-500 hover:bg-cyan-600 text-white transition-all">تغيير</button>
+              <Link href="/Pages/ChangePassword" className="ml-auto px-3 py-1 rounded-lg bg-cyan-500 hover:bg-cyan-600 text-white transition-all">تغيير</Link>
             </div>
             <div className="flex items-center gap-4">
               <FaTrashAlt className="text-red-400" />

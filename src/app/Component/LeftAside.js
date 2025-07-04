@@ -76,6 +76,16 @@ const LeftAside = ({ chatMode }) => (
                   الأصدقاء
                 </Link>
               </li>
+              {/*  المحفوظات */}
+              <li>
+                <Link href="/Pages/Saved" className="flex items-center gap-2 bg-white rounded-lg p-2 shadow hover:bg-cyan-50 text-cyan-900 font-semibold transition">
+                  <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 5v14l7-5 7 5V5a2 2 0 00-2-2H7a2 2 0 00-2 2z" />
+                  </svg>
+                  المحفوظات
+                </Link>
+              </li>
+
               {/*  الاخبار */}
               <li>
                 <Link href="/Pages/News" className="flex items-center gap-2 bg-white rounded-lg p-2 shadow hover:bg-cyan-50 text-cyan-900 font-semibold transition">
@@ -103,7 +113,7 @@ const LeftAside = ({ chatMode }) => (
                   <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 0v4m0-4h4m-4 0H8m8 0a2 2 0 11-4 0 2 2 0 014 0zM6 12a2 2 0 11-4 0 2 2 0 014 0zM18.364 5.636a9.003 9.003 0 00-12.728 0m12.728 12.728a9.003 9.003 0 01-12.728 0" /></svg>
                   الإعدادات
                 </Link>
-              </li>                  
+              </li>
             </ul>
             {/* <div className="mt-2 bg-white rounded-xl shadow p-4">
               <h3 className="text-cyan-700 font-bold mb-2 flex items-center gap-1">

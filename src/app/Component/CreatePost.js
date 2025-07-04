@@ -1,13 +1,13 @@
 "use client";
 
-import { addPostAsync } from "@/RTK/Reducers/postSlice";
+import { addPostAsync, fetchPosts } from "@/RTK/Reducers/postSlice";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { FaImage, FaSmile, FaPaperPlane } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 
 const CreatePost = ({ onPost }) => {
   const [postText, setPostText] = useState("");
@@ -16,8 +16,10 @@ const CreatePost = ({ onPost }) => {
   const [Localloading, setLoading] = useState(false);
   const toastTimeout = useRef(null);
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
-  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const { user, token ,isAuthenticated } = useSelector((state) => state.auth);
+  useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  }, []);
   useEffect(() => {
     if (image) {
       const objectUrl = URL.createObjectURL(image);
@@ -44,46 +46,53 @@ const CreatePost = ({ onPost }) => {
     formData.append("text", postText);
     if (image) formData.append("image", image);
     setLoading(true);
-    dispatch(addPostAsync({ formData, token })).then((action) => {
-      if (toastTimeout.current) clearTimeout(toastTimeout.current);
-      toastTimeout.current = setTimeout(() => {
-        toast.dismiss();
-      }, 2500);
-
+    dispatch(addPostAsync({ formData, token })).then((action) => {        
       if (addPostAsync.fulfilled.match(action)) {
+        console.log("action.payload in create post", action.payload);
         const newPost = action.payload?.post;
-
         if (!newPost) {
           toast.error("حدث خطأ غير متوقع", { rtl: true });
           setLoading(false);
           return;
         }
-
         setPostText("");
         setImage(null);
         setPreview(null);
         setLoading(false);
-        onPost(newPost); // ✅ فقط post
-        toast.success("تم نشر المنشور بنجاح!", { rtl: true });
+        // onPost(newPost); // ✅ فقط post
+        toast.success("تم نشر المنشور بنجاح!")
+        // toastTimeout.current = setTimeout(() => {
+        //   toast.dismiss();
+        // }, 3000);
+        dispatch(fetchPosts());
       } else {
         setLoading(false);
         toast.error(`فشل في نشر المنشور: ${action.error.message}`, { rtl: true });
       }
     });
   };
-
+  
   useEffect(() => {
     return () => {
       if (toastTimeout.current) clearTimeout(toastTimeout.current);
     };
   }, []);
-
   return (
     <div className="w-full max-w-xl mx-auto bg-gradient-to-br from-cyan-50 via-white to-teal-100 rounded-2xl shadow-lg p-5 mb-0 mt-2.5 border border-cyan-200">
       <div className="flex items-center gap-3 mb-1">
-        <Link href={'/Pages/Account'} className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center text-xl font-bold text-white shadow-md">
-          <FaSmile />
-        </Link>
+        {
+          isAuthenticated ?
+          <Link href={"/Pages/Account"}>
+            <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center">
+              {console.log("user?.profileImage", user?.profileImage)}
+              <img src={user?.profileImage} alt={user?.username} width={40} height={40} className="object-cover rounded-full" />
+            </div>
+          </Link>
+          :
+          <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center">
+           <img src="/file.svg" alt="صورة المستخدم" width={40} height={40} className="rounded-full w-10 h-10 object-cover border border-cyan-200"/>
+          </div>
+        }
         <input
           className="flex-1 px-4 py-2 rounded-full border border-cyan-200 bg-white/80 text-teal-900 focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow"
           placeholder="بماذا تفكر اليوم؟"
@@ -112,7 +121,7 @@ const CreatePost = ({ onPost }) => {
           {Localloading ? "جاري النشر..." : "نشر"}
         </button>
       </div>
-      <ToastContainer theme="colored" autoClose={2500} pauseOnHover={false} rtl={true} />
+      {/* <ToastContainer theme="colored" autoClose={2500} pauseOnHover={false} position="top-center" /> */}
     </div>
   );
 };

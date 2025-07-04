@@ -2,8 +2,10 @@
 "use client";
 
 import { FaUserPlus, FaCommentDots, FaSearch, FaUserFriends } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllUsersAsync } from "@/RTK/Reducers/userSlice";
 
 const suggestedFriends = [
   { name: "محمود", initial: "م", color: "bg-teal-400" },
@@ -18,10 +20,17 @@ const recentChats = [
   { name: "محمد", lastMsg: "سأراك لاحقًا!", time: "قبل 5 دقائق" },
   // { name: "ليلى", lastMsg: "تم إرسال الصورة.", time: "قبل 10 دقائق" },
 ];
-
 const RightAside = ({ chatMode }) => {
+
   const [search, setSearch] = useState("");
   const filteredFriends = suggestedFriends.filter(f => f.name.includes(search));
+  const { users, loading } = useSelector((state) => state.users);
+  console.log("users in right aside", users);
+  const dispatch = useDispatch();
+  console.log("users ", users);
+  useEffect(() => {
+    dispatch(getAllUsersAsync())
+  }, [dispatch]);
 
   return (
     <aside className="hidden lg:block sticky top-20 h-[calc(100vh-6rem)] w-64 bg-gradient-to-br from-cyan-50 to-teal-100 border-l border-teal-200 shadow-lg rounded-2xl p-6 m-4">
@@ -29,27 +38,19 @@ const RightAside = ({ chatMode }) => {
         {chatMode ? (
           <>
             <h2 className="text-xl font-bold text-teal-800 mb-2">قائمة الأصدقاء المتصلين</h2>
-            <ul className="space-y-2">
-              <li className="bg-white cursor-pointer rounded-lg p-2 shadow flex items-center gap-2 justify-between">
-                <span className="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-white font-bold">A</span>
-                <span className="text-teal-900 font-semibold">Ahmed</span>
-                <span className="w-2 h-2 rounded-full bg-green-400" title="متصل"></span>
-              </li>
-              <li className="bg-white cursor-pointer rounded-lg p-2 shadow flex items-center gap-2 justify-between">
-                <span className="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-white font-bold">م</span>
-                <span className="text-teal-900 font-semibold">محمد</span>
-                <span className="w-2 h-2 rounded-full bg-green-400" title="متصل"></span>
-              </li>
-              <li className="bg-white cursor-pointer rounded-lg p-2 shadow flex items-center gap-2 justify-between">
-                <span className="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-white font-bold">م</span>
-                <span className="text-teal-900 font-semibold">محمود</span>
-                <span className="w-2 h-2 rounded-full " title="متصل"></span>
-              </li>
-              <li className="bg-white cursor-pointer rounded-lg p-2 shadow flex items-center gap-2 justify-between">
-                <span className="w-8 h-8 rounded-full bg-cyan-400 flex items-center justify-center text-white font-bold">س</span>
-                <span className="text-teal-900 font-semibold">سارة</span>
-                <span className="w-2 h-2 rounded-full bg-green-400" title="متصل"></span>
-              </li>
+            <ul className="space-y-2 max-h-100 overflow-y-auto">
+              { users &&
+                users?.map((user) => (
+                  <li key={user._id} className="bg-white  cursor-pointer rounded-lg p-2 shadow flex items-center gap-2 justify-between">
+                    <div className="flex items-center gap-2">
+                        <span className="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-white font-bold">{user.username.charAt(0)}</span>
+                        <span className="text-teal-900 font-semibold">{user.username}</span>
+
+                    </div>
+                    <span className="w-2 h-2 rounded-full bg-green-400" title="متصل"></span>
+                  </li>
+                ))
+              }
             </ul>
             <div className="mt-6 bg-white rounded-xl shadow p-4">
               <h3 className="text-cyan-700 font-bold mb-2">نصيحة الدردشة</h3>

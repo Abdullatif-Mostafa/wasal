@@ -11,14 +11,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl">
       <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
-          <ReduxInitializer/>
-              <Nav/>
-              {children}
-         <Toaster position="top-center" reverseOrder={false} />
-
+          <ReduxInitializer />
+          <Nav />
+          {children}
+          <Toaster position="top-center" reverseOrder={false} />
         </Provider>
       </body>
     </html>

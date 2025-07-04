@@ -51,14 +51,13 @@ const Nav = () => {
       toast.success('تم تسجيل الخروج بنجاح!');
     }
   };
-
   const renderDropdown = () => (
-    <div ref={dropdownRef} className="absolute right-0 mt-2 w-56 bg-white text-cyan-900 rounded-xl shadow-2xl border border-cyan-100 z-50 animate-fade-in">
+    <div ref={dropdownRef} className="absolute mt-2 w-56 bg-white text-cyan-900 rounded-xl shadow-2xl border border-cyan-100 z-50 animate-fade-in">
       <ul className="flex flex-col gap-1 py-2">
         <li>
           <Link
             href="/Pages/Account"
-            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-50 rounded transition"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-100 rounded transition"
             onClick={() => { setDropdownOpen(false); setMenuOpen(!menuOpen) }}
           >
             <span>👤</span>
@@ -68,7 +67,7 @@ const Nav = () => {
         <li>
           <Link
             href="/Pages/Friends"
-            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-50 rounded transition"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-100 rounded transition"
             onClick={() => { setDropdownOpen(false); setMenuOpen(!menuOpen) }}
           >
             <span>👥</span>
@@ -78,7 +77,7 @@ const Nav = () => {
         <li>
           <Link
             href="/Pages/News"
-            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-50 rounded transition"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-100 rounded transition"
             onClick={() => { setDropdownOpen(false); setMenuOpen(!menuOpen) }}
           >
             <span>📰</span>
@@ -88,7 +87,7 @@ const Nav = () => {
         <li>
           <Link
             href="/Pages/Groups"
-            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-50 rounded transition"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-100 rounded transition"
             onClick={() => { setDropdownOpen(false); setMenuOpen(!menuOpen) }}
           >
             <span>👨‍👩‍👧‍👦</span>
@@ -98,7 +97,7 @@ const Nav = () => {
         <li>
           <Link
             href="/Pages/Notifications"
-            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-50 rounded transition"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-100 rounded transition"
             onClick={() => { setDropdownOpen(false); setMenuOpen(!menuOpen) }}
           >
             <span>🔔</span>
@@ -108,7 +107,7 @@ const Nav = () => {
         <li>
           <Link
             href="/Pages/setting"
-            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-50 rounded transition"
+            className="flex items-center gap-3 px-4 py-2 hover:bg-cyan-100 rounded transition"
             onClick={() => { setDropdownOpen(false); setMenuOpen(!menuOpen) }}
 
           >
@@ -146,7 +145,7 @@ const Nav = () => {
         </h4>
 
         {/* روابط سطح المكتب */}
-        <ul className="hidden md:flex space-x-6 items-center">
+        <ul className="hidden md:flex space-x-2 items-center">
           <li className="nav-item flex items-center justify-center">
             <Link onClick={() => setDropdownOpen(false)} className="hover:text-teal-200 transition-colors duration-200 flex items-center justify-center" href="/">
               <span className="bg-white/90 rounded-full p-2 shadow hover:bg-cyan-100 transition">
@@ -184,7 +183,7 @@ const Nav = () => {
           )}
           {isAuthenticated ? (
             <>
-              <li className="nav-item relative" ref={dropdownRef}>
+              <li className="" ref={dropdownRef}>
                 <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-400 to-teal-500 hover:from-teal-400 hover:to-cyan-500 font-bold shadow">
                   <span className="w-8 h-8 flex items-center justify-center rounded-full bg-white text-cyan-600 font-bold text-lg shadow">{user?.username?.[0] || "م"}</span>
                   <span>{user?.username || "حسابي"}</span>
@@ -195,8 +194,8 @@ const Nav = () => {
             </>
           ) : (
             <>
-              <li className="nav-item"><Link className="hover:text-teal-200 transition-colors duration-200" href="/Pages/Login">تسجيل الدخول</Link></li>
-              <li className="nav-item"><Link className="hover:text-teal-200 transition-colors duration-200" href="/Pages/Register">تسجيل حساب جديد</Link></li>
+              <li><Link className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-teal-500 hover:from-teal-400 hover:to-cyan-500 font-bold shadow" href="/Pages/Login">تسجيل الدخول</Link></li>
+              <li><Link className="flex items-center  px-4 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-teal-500 hover:from-teal-400 hover:to-cyan-500 font-bold shadow " href="/Pages/Register">تسجيل حساب جديد</Link></li>
             </>
           )}
         </ul>
@@ -219,14 +218,13 @@ const Nav = () => {
           {isAuthenticated && (
             <div className="w-full flex items-center gap-2 py-1 px-2 rounded-lg bg-gradient-to-r from-cyan-400 to-teal-500 hover:from-teal-400 hover:to-cyan-500 font-bold shadow">
               <li className="nav-item w-full text-right flex items-center gap-4">
-                <li className="nav-item flex items-center justify-center">
+                {/* <li className="nav-item flex items-center justify-center"> */}
                   <Link href="/" onClick={() => setMenuOpen(!menuOpen)} className="hover:text-teal-200 transition-colors duration-200 flex items-center justify-center">
                     <span className="bg-white/90 rounded-full p-2 shadow hover:bg-cyan-100 transition">
                       <FaHome className="w-6 h-6 text-teal-600" title="الصفحة الرئيسية" />
                     </span>
-
                   </Link>
-                </li>
+                {/* </li> */}
                 <Link href="/Pages/Chat" onClick={() => setMenuOpen(!menuOpen)} className="flex items-center relative">
                   <span className="bg-white/90 rounded-full p-2 shadow hover:bg-cyan-100 transition relative">
                     <FaComments className="w-6 h-6 text-teal-600" title="الدردشة" />

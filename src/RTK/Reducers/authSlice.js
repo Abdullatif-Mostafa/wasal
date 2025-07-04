@@ -11,6 +11,7 @@ export const loginAsync = createAsyncThunk(
         body: JSON.stringify(credentials),
       });
       const data = await res.json();
+      console.log("login data", data);
       if (!res.ok || data.status !== 'success') {
         return rejectWithValue(data.data?.message || 'فشل تسجيل الدخول');
       }
