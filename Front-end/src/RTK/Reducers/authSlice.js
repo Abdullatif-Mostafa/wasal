@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://wasal-api-production.up.railway.app"  ;
+// const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://wasal-api-production.up.railway.app"  ;
+const API_URL ="https://wasal-api-production.up.railway.app"  ;
 // Async thunk for login
 export const loginAsync = createAsyncThunk(
   'auth/login',
