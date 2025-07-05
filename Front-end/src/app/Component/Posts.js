@@ -30,6 +30,7 @@ const Posts = ({ newPosts = [] }) => {
   }, [dispatch]);
   // handle likes
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  console.log("API_URL ======>", API_URL);
  const handleLike = (post) => {
    if (!isAuthenticated && !user) {
       toast.error('يجب تسجيل الدخول للإعجاب بالمنشور');
