@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // https://tarmeezacademy.com/api/v1/posts
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://wasal-api-production.up.railway.app" ;  
 
 export const fetchPosts = createAsyncThunk(
   'post/fetchPosts',

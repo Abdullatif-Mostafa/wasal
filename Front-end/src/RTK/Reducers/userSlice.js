@@ -1,6 +1,6 @@
 // "use strict";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://wasal-api-production.up.railway.app";
 
 // Get all users
 export const getAllUsersAsync = createAsyncThunk(
