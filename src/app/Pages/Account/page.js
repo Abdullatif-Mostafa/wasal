@@ -29,6 +29,7 @@ export default function Account() {
   const [activeCommentPostId, setActiveCommentPostId] = useState(null);
   const { loading: commentsLoading, error: commentsError, commentsMap } = useSelector((state) => state.comments);
   const [theme, setTheme] = useState("light");
+  const API_URL =process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app" ;
   const userId = user?._id;
   console.log("userId ", userId);
   // console.log("posts by user", selectedPost);
@@ -367,8 +368,8 @@ export default function Account() {
                           <img
                             alt={post.image}
                             className="max-h-75 object-cover w-full border border-teal-200"
-                            src={post.image.startsWith('http') ? post.image : `http://localhost:4000/${post.image}`}
-                          // src={`http://localhost:4000/${post.image}`}
+                            src={post.image.startsWith('http') ? post.image : `${API_URL}/${post.image}`}
+                            // src={`http://localhost:4000/${post.image}`}
                           />
                         </div>
                       )}

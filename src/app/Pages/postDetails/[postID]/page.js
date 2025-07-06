@@ -27,6 +27,8 @@ const PostPage = () => {
   // console.log("postId ", selectedPost, "loading ", loading, "error ", error);
   const [openMenuId, setOpenMenuId] = useState(null);
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+    const API_URL =process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app" ;
+
 
   useEffect(() => {
     if (postId) {
@@ -296,7 +298,7 @@ const PostPage = () => {
                   <img
                     alt={selectedPost.image}
                     className="max-h-75 object-cover w-full border border-teal-200"
-                    src={selectedPost.image.startsWith('http') ? selectedPost.image : `http://localhost:4000/${selectedPost.image}`}
+                      src={post.image.startsWith('http') ? post.image : `${API_URL}/${post.image}`}
                   // src={`http://localhost:4000/${selectedPost.image}`}
                   />
                 </div>

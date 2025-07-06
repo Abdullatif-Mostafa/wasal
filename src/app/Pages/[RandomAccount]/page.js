@@ -15,7 +15,7 @@ import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment
 export default function Page() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { user,isAuthenticated } = useSelector(state => state.auth);
+  const { user, isAuthenticated } = useSelector(state => state.auth);
   // console.log("user in the random account ", user)
   const { selectedUser } = useSelector(state => state.users);
   const [editCommentModal, setEditCommentModal] = useState({ open: false, comment: null, postId: null });
@@ -36,6 +36,7 @@ export default function Page() {
   const { selectedPost } = useSelector(state => state.posts);
   console.log("selected post in the random account ", selectedPost);
   const { loading: commentsLoading, error: commentsError, commentsMap } = useSelector((state) => state.comments);
+  const API_URL =process.env.REACT_APP_API_URL || "https://wasal-api-production.up.railway.app" ;
 
   useEffect(() => {
     setTimeout(() => {
@@ -58,7 +59,6 @@ export default function Page() {
     setTheme(newTheme);
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
-
   const handleEditChange = e => {
     const { name, value, files } = e.target;
     if (name === 'profileImage' && files?.[0]) {
@@ -131,8 +131,8 @@ export default function Page() {
   const fetchCommentsForPost = (postId) => {
     dispatch(getCommentsForPost(postId));
   }
-    const handleLike = (post) => {
-    console.log("post in the handleLike ", post); 
+  const handleLike = (post) => {
+    console.log("post in the handleLike ", post);
     if (!isAuthenticated && !user) {
       toast.error('يجب تسجيل الدخول للإعجاب بالمنشور');
       return;
@@ -332,15 +332,15 @@ export default function Page() {
                           <img
                             alt={post.image}
                             className="max-h-75 object-cover w-full border border-teal-200"
-                            src={post.image.startsWith('http') ? post.image : `http://localhost:4000/${post.image}`}
+                            src={post.image.startsWith('http') ? post.image : `${API_URL}/${post.image}`}
                           // src={`http://localhost:4000/${post.image}`}
                           />
                         </div>
                       )}
                     </Link>
                     <div className="">
-                          {/*اعجاب  */}
-                       <div className="flex justify-between gap-2 border-t pt-3 px-6 pb-4 bg-cyan-50 rounded-b-2xl">
+                      {/*اعجاب  */}
+                      <div className="flex justify-between gap-2 border-t pt-3 px-6 pb-4 bg-cyan-50 rounded-b-2xl">
                         <div className="relative group">
                           <button
                             href="#"
@@ -373,7 +373,7 @@ export default function Page() {
                                 post?.likes?.map((like) => (
                                   <div key={like._id} className="flex items-center gap-2 px-3 py-1 rounded-lg hover:bg-cyan-100 text-cyan-700 font-semibold cursor-pointer transition-colors">
                                     <span className="w-6 h-6 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 text-white font-bold">
-                                      {like.username?.[0] || "م"} 
+                                      {like.username?.[0] || "م"}
                                       {/* { console.log("llike details",like) } */}
                                     </span>
                                     <span className="text-sm">{like.username || "مستخدم مجهول"}</span>
@@ -431,9 +431,9 @@ export default function Page() {
                           </div>
                         </div>
                       </div>
-                      
-                 
-                     
+
+
+
                     </div>
                     {/* حقل التعليق وعرض التعليقات */}
                     {activeCommentPostId === post._id && (
