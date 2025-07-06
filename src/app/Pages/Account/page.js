@@ -376,7 +376,7 @@ export default function Account() {
                     </Link>
                     <div className="">
                       {/*اعجاب  */}
-                   <div className="flex justify-between gap-2 border-t pt-3 px-6 pb-4 bg-cyan-50 rounded-b-2xl">
+                   <div className="flex justify-between gap-2 sm:gap-0 border-t pt-3 px-6 pb-4 bg-cyan-50 rounded-b-2xl">
                         <div className="relative group">
                           <button
                             href="#"
