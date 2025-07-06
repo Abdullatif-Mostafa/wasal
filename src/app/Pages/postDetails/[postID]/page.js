@@ -298,7 +298,8 @@ const PostPage = () => {
                   <img
                     alt={selectedPost.image}
                     className="max-h-75 object-cover w-full border border-teal-200"
-                      src={post.image.startsWith('http') ? post.image : `${API_URL}/${post.image}`}
+                      src={selectedPost.image.startsWith('http') ? selectedPost.image : `${API_URL}/${selectedPost.image}`}
+                    // src={selectedPost.image.startsWith('http') ? selectedPost.image : `http://localhost:4000/${selectedPost.image}`}
                   // src={`http://localhost:4000/${selectedPost.image}`}
                   />
                 </div>
