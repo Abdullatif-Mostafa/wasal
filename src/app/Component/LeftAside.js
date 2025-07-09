@@ -18,7 +18,7 @@ const updates = [
 ];
 const randomTip = tips[Math.floor(Math.random() * tips.length)];
 const LeftAside = ({ chatMode }) => (
-  <aside className="hidden lg:block sticky top-20 h-[calc(100vh-6rem)] w-64 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-6 m-4">
+  <aside className="hidden lg:block sticky top-10 h-[calc(100vh)] w-64 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-6 m-3">
     <div className="flex flex-col gap-6 h-full">
       {chatMode ? (
         <>
@@ -55,14 +55,8 @@ const LeftAside = ({ chatMode }) => (
         </>
       ) : (
         <>
-          <div className="sticky top-24">
+          <div className="sticky top-10">
             <ul className="space-y-1.5">
-              {/* <li>
-                <Link href="/Pages/Posts" className="flex items-center gap-2 bg-white rounded-lg p-2 shadow hover:bg-cyan-50 text-cyan-900 font-semibold transition">
-                  <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 21H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z" /></svg>
-                  المنشورات
-                </Link>
-              </li> */}
               <li>
                 <Link href="/Pages/Account" className="flex items-center gap-2 bg-white rounded-lg p-2 shadow hover:bg-cyan-50 text-cyan-900 font-semibold transition">
                   <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -115,14 +109,8 @@ const LeftAside = ({ chatMode }) => (
                 </Link>
               </li>
             </ul>
-            {/* <div className="mt-2 bg-white rounded-xl shadow p-4">
-              <h3 className="text-cyan-700 font-bold mb-2 flex items-center gap-1">
-                <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m4 0h-1v-4h-1m-4 0h-1v-4h-1" /></svg>
-                نصيحة اليوم
-              </h3>
-              <p className="text-cyan-900 text-sm">{randomTip}</p>
-            </div> */}
-            <div className="mt-2 bg-white rounded-xl shadow p-4">
+            
+            <div className="mt-3 bg-white rounded-xl shadow p-4">
               <h3 className="text-cyan-700 font-bold mb-2 flex items-center gap-1">
                 <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 7.165 6 9.388 6 12v2.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
                 آخر التحديثات

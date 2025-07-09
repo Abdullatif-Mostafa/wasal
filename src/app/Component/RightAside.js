@@ -31,9 +31,8 @@ const RightAside = ({ chatMode }) => {
   useEffect(() => {
     dispatch(getAllUsersAsync())
   }, [dispatch]);
-
   return (
-    <aside className="hidden lg:block sticky top-20 h-[calc(100vh-6rem)] w-64 bg-gradient-to-br from-cyan-50 to-teal-100 border-l border-teal-200 shadow-lg rounded-2xl p-6 m-4">
+    <aside className="hidden lg:block sticky top-20 h-[calc(100vh-5rem)] w-64 bg-gradient-to-br from-cyan-50 to-teal-100 border-l border-teal-200 shadow-lg rounded-2xl p-6 m-4">
       <div className="flex flex-col gap-3 h-full">
         {chatMode ? (
           <>

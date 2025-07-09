@@ -56,23 +56,23 @@ const [removedItem, setRemovedItem] = useState(null);
         <div className="absolute top-4 right-4">
           <Link
             href="/"
-            className="px-4 py-2 mt-3  bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white rounded-full font-bold shadow hover:from-cyan-400 hover:to-teal-500 transition-colors text-sm flex  gap-2"
+            className=" fixed top-0 right-0 px-4 py-2 mt-6  bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white rounded-full font-bold shadow hover:from-cyan-400 hover:to-teal-500 transition-colors text-sm flex  gap-2"
           >
             <FaArrowRight /> الرئيسية
           </Link>
         </div>
 
-        <h2 className="text-2xl mt-10 font-extrabold text-teal-700 mb-2 flex items-center gap-2">
+        {/* <h2 className="text-2xl mt-10 font-extrabold text-teal-700 mb-2 flex items-center gap-2">
           <FaBookmark className="text-cyan-400" />
           المحفوظات ({savedItems.length})
-        </h2>
+        </h2> */}
 
         {savedItems.length === 0 ? (
           <div className="text-center text-gray-400 text-lg py-12">
             لا توجد عناصر محفوظة بعد.
           </div>
         ) : (
-          <ul className="flex flex-col gap-4 mt-2">
+          <ul className="flex flex-col gap-4 mt-12">
             {savedItems.map((item) => (
               <li
                 key={item.id}

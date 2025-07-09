@@ -1,5 +1,4 @@
 "use client";
-// import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Provider } from "react-redux";
 import store from "../RTK/Store"
@@ -9,9 +8,17 @@ import { Toaster } from "react-hot-toast";
 // import Home from "./Component/Header/page"
 export default function RootLayout({ children }) {
   return (
+
     <html lang="ar" dir="rtl">
-      <body
-      // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+       <head>
+        <meta charSet="utf-8"></meta>
+        <meta name="" description="موقع تواصل اجتماعي يتيح لك التواصل مع الاهل والاصدقاء والاحباب وهو شبيه بموقع فيس بوك"></meta>
+        <title>وصال</title>
+       </head>
+      <body 
+      style={{backgroundColor:"#F5F7FA",height:"100vh"}}
+        className={'backdrop:#F5F7FA'}
+        // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
           <ReduxInitializer />

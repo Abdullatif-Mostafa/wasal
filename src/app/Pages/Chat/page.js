@@ -50,7 +50,7 @@ export default function Chat() {
         <div className="hidden lg:block bg-[#f0f4f8] border-l border-[#e0e7ef] sticky top-0 h-[90vh]">
           <RightAside chatMode />
         </div>
-         <main className="flex-1 flex flex-col items-center justify-center py-8">
+        <main className="flex-1 flex flex-col items-center justify-center py-8">
           <div className="flex flex-col h-[80vh] w-full max-w-2xl mx-auto border rounded-2xl shadow-2xl bg-gradient-to-br from-cyan-100 via-teal-200 to-cyan-300 dark:from-gray-900 dark:via-teal-900 dark:to-cyan-900 p-4 transition-colors duration-300">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-2xl font-extrabold text-teal-700 dark:text-cyan-200 flex items-center gap-2">
@@ -77,7 +77,25 @@ export default function Chat() {
                       <span className="text-[10px] font-bold text-teal-600">{msg.time}</span>
                       {/* {console.log("message ",msg)} */}
                     </div>
-                    <div className="break-words text-right">{msg.text}</div>
+                    <p className="break-words text-right mb-2">{msg.text}</p>
+                 {msg.user &&
+                    <div className="flex gap-3">
+                      <button
+                        // onClick={() => { handleEditComment(comment._id, comment.content, post._id) }}
+                        className="text-yellow-600 hover:text-yellow-800 text-xs font-semibold"
+                        title="تعديل الرساله"
+                      >
+                        ✏️ تعديل
+                      </button>
+                      <button
+                        // onClick={() => handleDeleteComment(comment._id, post._id)}
+                        className="text-red-600 hover:text-red-800 text-xs font-semibold"
+                        title="حذف الرساله"
+                      >
+                        🗑️ حذف
+                      </button>
+                    </div>
+                 }
                   </div>
                 </div>
               ))}

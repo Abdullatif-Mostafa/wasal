@@ -59,7 +59,7 @@ export default function Account() {
       cancelButtonText: 'إلغاء',
       reverseButtons: true,
       showLoaderOnConfirm: true,
-      customClass: { popup: 'rounded-2xl w-[90%] sm:w-[400px]' },
+      customClass: { popup: 'rounded-2xl w-[90%] sm:w-[400px]',width:"200px" },
       showClass: { popup: "animate__animated animate__fadeInDown" },
       hideClass: { popup: "animate__animated animate__fadeOutUp" },
     });
@@ -376,7 +376,7 @@ export default function Account() {
                     </Link>
                     <div className="">
                       {/*اعجاب  */}
-                   <div className="flex justify-between gap-0 border-t pt-3 px-6 pb-4 bg-cyan-50 rounded-b-2xl">
+                   <div className="flex justify-between gap-0.5 border-t pt-3 px-6 pb-4 bg-cyan-50 rounded-b-2xl">
                         <div className="relative group">
                           <button
                             href="#"
