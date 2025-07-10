@@ -79,11 +79,11 @@ const CreatePost = ({ onPost }) => {
   }, []);
   return (
     <div className="w-full max-w-xl mx-auto bg-gradient-to-br from-cyan-50 via-white to-teal-100 rounded-2xl shadow-lg p-5 mb-0 mt-2.5 border border-cyan-200">
-      <div className="flex items-center gap-3 mb-1">
+      <div className="flex items-center gap-3 sm:gap-1 mb-1 overflow-hidden ">
         {
           isAuthenticated ?
           <Link href={"/Pages/Account"}>
-            <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center">
               {/* {console.log("user?.profileImage", user?.profileImage)} */}
               <img src={user?.profileImage} alt={user?.username} width={40} height={40} className="object-cover rounded-full" />
             </div>
