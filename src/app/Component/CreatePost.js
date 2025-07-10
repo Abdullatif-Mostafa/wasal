@@ -79,12 +79,11 @@ const CreatePost = ({ onPost }) => {
   }, []);
   return (
     <div className="w-full max-w-xl mx-auto bg-gradient-to-br from-cyan-50 via-white to-teal-100 rounded-2xl shadow-lg p-5 mb-0 mt-2.5 border border-cyan-200">
-      <div className="flex items-center gap-3 sm:gap-1 mb-1 overflow-hidden ">
+      <div style={{maxWidth:"99%"}} className="flex items-center gap-1 sm:gap-1 mb-1 overflow-hidden ">
         {
           isAuthenticated ?
           <Link href={"/Pages/Account"}>
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center">
-              {/* {console.log("user?.profileImage", user?.profileImage)} */}
               <img src={user?.profileImage} alt={user?.username} width={40} height={40} className="object-cover rounded-full" />
             </div>
           </Link>
@@ -94,7 +93,7 @@ const CreatePost = ({ onPost }) => {
           </div>
         }
         <input
-          className="flex-1 px-4 py-2 rounded-full border border-cyan-200 bg-white/80 text-teal-900 focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow"
+          className="flex-1 px-4 py-1.5 rounded-full border border-cyan-200 bg-white/80 text-teal-900 focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow"
           placeholder="بماذا تفكر اليوم؟"
           value={postText}
           onChange={e => setPostText(e.target.value)}
