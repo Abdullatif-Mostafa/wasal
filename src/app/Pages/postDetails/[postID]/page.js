@@ -163,7 +163,7 @@ const PostPage = () => {
             style={{ width: "100%", cursor: "pointer" }}
             className="CardBox bg-gradient-to-br from-white via-teal-50 to-cyan-100 rounded-2xl shadow-lg p-0 text-right border border-teal-200 hover:shadow-2xl transition-shadow duration-200 mb-0.5"
           >
-            <div className="flex justify-between items-center px-6 pt-3 pb-2 border-b bg-teal-50 rounded-t-2xl">
+            <div className="flex justify-between items-center px-2 pt-3 pb-2 border-b bg-teal-50 rounded-t-2xl">
               <Link href={`/Pages/${selectedPost.user?._id}`} className="flex items-center justify-center gap-2">
                 <span className="w-12 h-12 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400  text-xl font-bold text-white shadow-md">
                   <span role="img" aria-label={selectedPost?.user?.username || "مستخدم مجهول"} className="mb-2">{selectedPost.user?.username?.[0] || "م"}</span>
