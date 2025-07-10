@@ -88,8 +88,8 @@ const CreatePost = ({ onPost }) => {
             </div>
           </Link>
           :
-          <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center">
-           <img src="/file.svg" alt="صورة المستخدم" width={40} height={40} className="rounded-full w-10 h-10 object-cover border border-cyan-200"/>
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center">
+           <img src="/file.svg" alt="صورة المستخدم" width={40} height={40} className="rounded-full object-cover"/>
           </div>
         }
         <input
