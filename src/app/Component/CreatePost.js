@@ -79,7 +79,7 @@ const CreatePost = ({ onPost }) => {
   }, []);
   return (
     <div className="w-full max-w-xl mx-auto bg-gradient-to-br from-cyan-50 via-white to-teal-100 rounded-2xl shadow-lg p-5 mb-0 mt-2.5 border border-cyan-200">
-      <div style={{maxWidth:"99%"}} className="flex items-center gap-1 sm:gap-1 mb-1 overflow-hidden ">
+      <div style={{maxWidth:"99%"}} className="flex items-center gap-1 sm:gap-1 mb-1 ">
         {
           isAuthenticated ?
           <Link href={"/Pages/Account"}>
