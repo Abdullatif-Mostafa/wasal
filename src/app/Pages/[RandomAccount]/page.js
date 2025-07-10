@@ -153,7 +153,7 @@ export default function Page() {
   };
   return (
     <div className={`min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 via-white to-teal-100 font-[Ruboto,sans-serif] py-10 ${theme === "dark" ? "dark" : ""}`}>
-      <div className="w-full max-w-2xl bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
+      <div className="w-full   max-w-2xl bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
         {/* Settings Dropdown */}
         <div className="absolute top-4 mt-3 right-4">
           <Link href="/" className=" justify-start px-4 py-2 bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white rounded-full font-bold shadow hover:from-cyan-400 hover:to-teal-500 transition-colors text-sm flex items-center gap-2">
@@ -217,7 +217,7 @@ export default function Page() {
         <div className="w-full bg-white/80 rounded-xl shadow p-4 flex flex-col gap-2 mt-2">
           <h3 className="text-cyan-700 font-bold mb-1">أحدث المنشورات</h3>
           {Array.isArray(posts) && posts.length !== 0 ? (
-            <ul className='flex flex-col gap-2'>
+            <ul className='flex flex-col gap-0.5'>
               {posts?.map((post) => {
                 const hasLiked = post.likes?.includes(user?._id);
                 return (
@@ -559,7 +559,7 @@ export default function Page() {
         {showEdit && (
           <div style={{ backgroundColor: "transparent", maxHeight: "100vh", width: "100%" }} className="fixed top-5 flex items-center justify-center  inset-0 z-40">
             <div className="inset-5 w-sm animate-fade-in">
-              <div className="bg-white w-full rounded-2xl shadow-2xl p-8 relative">
+              <div className="bg-white w-full rounded-2xl shadow-2xl pt-8 relative">
                 <button className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl cursor-pointer" onClick={() => setShowEdit(false)} title="إغلاق"><FaTimes /></button>
                 <h2 className="text-2xl font-bold text-teal-700 mb-4">تعديل الحساب</h2>
                 <form onSubmit={handleEditSubmit} className="flex flex-col gap-4">

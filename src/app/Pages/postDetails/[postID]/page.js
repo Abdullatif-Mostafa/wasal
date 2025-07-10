@@ -305,7 +305,7 @@ const PostPage = () => {
                 </div>
               )}
             </div>
-            <div className="flex justify-between gap-0 border-t pt-3 px-3 pb-4 bg-cyan-50 rounded-b-2xl">
+            <div className="flex justify-between gap-0 border-t pt-3 px-1.5 pb-4 bg-cyan-50 rounded-b-2xl">
               <div className="relative group">
                 <button
                   href="#"
