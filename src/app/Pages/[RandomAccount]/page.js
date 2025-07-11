@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { logout } from '@/RTK/Reducers/authSlice';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { editPostAsync, fetchPostById, fetchPosts, fetchPostsByUserId, toggleLikeOnPost, updateLikesInPosts } from '@/RTK/Reducers/postSlice';
+import { deletePostAsync, editPostAsync, fetchPostById, fetchPosts, fetchPostsByUserId, toggleLikeOnPost, updateLikesInPosts } from '@/RTK/Reducers/postSlice';
 import toast, { Toaster } from 'react-hot-toast';
 import { editUserByIdAsync, getUserByIdAsync } from '@/RTK/Reducers/userSlice';
 import PostSkeleton from '@/app/Component/Skeletons/PostSkeleton';
@@ -69,6 +69,44 @@ export default function Page() {
         router.push("/");
       }
     };
+    const handleDeletePost = async (postId) => {
+        console.log("postId -------=====", postId);
+        const result = await Swal.fire({
+          text: 'هل أنت متأكد من حذف المنشور؟',
+          confirmButtonColor: '#e11d48',
+          cancelButtonColor: '#38bdf8',
+          confirmButtonText: 'نعم، احذف',
+          cancelButtonText: 'إلغاء',
+          showCancelButton: true,
+          showLoaderOnConfirm: true,
+          reverseButtons: true,
+          customClass: {
+            popup: 'w-100px  rounded-xl p-6 shadow-lg',
+            confirmButton: 'bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700',
+            cancelButton: 'bg-sky-400 text-white px-4 py-2 rounded hover:bg-sky-500',
+            title: 'text-lg font-bold text-gray-800 text-center',
+            actions: 'flex flex-row-reverse gap-2 justify-center',
+            content: 'text-gray-700 text-sm text-center',
+          },
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        console.log("result ", result);
+        if (result.isConfirmed) {
+          try {
+            await dispatch(deletePostAsync(postId)).unwrap();
+            toast.success("تم حذف المنشور بنجاح!");
+            router.push("/");
+            // dispatch(fetchPosts());
+          } catch (err) {
+            toast.error("فشل في حذف المنشور");
+          }
+        }
+      };
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
