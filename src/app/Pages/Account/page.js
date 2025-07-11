@@ -6,7 +6,7 @@ import Image from "next/image";
 import { logout } from "@/RTK/Reducers/authSlice";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { editPostAsync, fetchPostById, fetchPosts, fetchPostsByUserId, toggleLikeOnPost, updateLikesInPosts } from "@/RTK/Reducers/postSlice";
+import { deletePostAsync, editPostAsync, fetchPostById, fetchPosts, fetchPostsByUserId, toggleLikeOnPost, updateLikesInPosts } from "@/RTK/Reducers/postSlice";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import PostSkeleton from "@/app/Component/Skeletons/PostSkeleton";
@@ -161,7 +161,7 @@ export default function Account() {
         toast.success("تم حذف المنشور بنجاح!");
         // setTimeout(() => { dispatch(fetchPosts()); }
         // , 1000);
-        dispatch(fetchPosts());
+        // dispatch(fetchPosts());
       } catch (err) {
         toast.error("فشل في حذف المنشور");
       }

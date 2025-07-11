@@ -100,7 +100,7 @@ export default function Page() {
           try {
             await dispatch(deletePostAsync(postId)).unwrap();
             toast.success("تم حذف المنشور بنجاح!");
-            router.push("/");
+            // router.push("/");
             // dispatch(fetchPosts());
           } catch (err) {
             toast.error("فشل في حذف المنشور");
