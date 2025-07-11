@@ -29,7 +29,7 @@ const Posts = ({ newPosts = [] }) => {
     dispatch(fetchPosts());
   }, [dispatch]);
 const API_URL = "https://wasal-api-production.up.railway.app";
-console.log("API_URL ======>", API_URL);
+console.log("API_URL ===", API_URL);
 const handleLike = (post) => {
   if (!isAuthenticated && !user) {
     toast.error('يجب تسجيل الدخول للإعجاب بالمنشور');

@@ -10,6 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { editUserByIdAsync, getUserByIdAsync } from '@/RTK/Reducers/userSlice';
 import PostSkeleton from '@/app/Component/Skeletons/PostSkeleton';
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from '@/RTK/Reducers/commentSlice';
+import Swal from 'sweetalert2';
 
 export default function Page() {
   const dispatch = useDispatch();
@@ -48,11 +49,26 @@ export default function Page() {
     comments: 34,
     friends: 5,
   };
-  const handleLogout = () => {
-    dispatch(logout());
-    toast.success('تم تسجيل الخروج');
-    router.push('/Pages/Login');
-  };
+  const handleLogout = async () => {
+      const result = await Swal.fire({
+        // title: 'تأكيد تسجيل الخروج',
+        text: 'هل أنت متأكد أنك تريد تسجيل الخروج؟',
+        showCancelButton: true,
+        confirmButtonColor: '#e11d48',
+        cancelButtonColor: '#38bdf8',
+        confirmButtonText: 'تأكيد',
+        cancelButtonText: 'إلغاء',
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        customClass: { popup: 'rounded-2xl w-[90%] sm:w-[400px]',width:"200px" },
+        showClass: { popup: "animate__animated animate__fadeInDown" },
+        hideClass: { popup: "animate__animated animate__fadeOutUp" },
+      });
+      if (result.isConfirmed) {
+        dispatch(logout());
+        router.push("/");
+      }
+    };
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
@@ -86,7 +102,6 @@ export default function Page() {
         toast.error('حدث خطأ أثناء التحديث');
       });
   };
-
   const handleSubmitComment = (postId) => {
     if (!commentText.trim()) return;
     dispatch(submitComment({ postId, content: commentText }))
@@ -153,7 +168,7 @@ export default function Page() {
   };
   return (
     <div className={`min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 via-white to-teal-100 font-[Ruboto,sans-serif] py-10 ${theme === "dark" ? "dark" : ""}`}>
-      <div className="w-full   max-w-2xl bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
+      <div className="w-full max-w-2xl bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
         {/* Settings Dropdown */}
         <div className="absolute top-4 mt-3 right-4">
           <Link href="/" className=" justify-start px-4 py-2 bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white rounded-full font-bold shadow hover:from-cyan-400 hover:to-teal-500 transition-colors text-sm flex items-center gap-2">
@@ -214,7 +229,7 @@ export default function Page() {
           </div>
         )}
         {/* Recent Posts */}
-        <div className="w-full bg-white/80 rounded-xl shadow p-4 flex flex-col gap-2 mt-2">
+        <div className="w-full rounded-xl  pt-0 flex flex-col gap-2 mt-2">
           <h3 className="text-cyan-700 font-bold mb-1">أحدث المنشورات</h3>
           {Array.isArray(posts) && posts.length !== 0 ? (
             <ul className='flex flex-col gap-0.5'>
