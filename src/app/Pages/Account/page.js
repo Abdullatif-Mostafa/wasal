@@ -39,6 +39,7 @@ export default function Account() {
       router.push('/Pages/Login');
     }
   }, []);
+  
   useEffect(() => {
       dispatch(fetchPostsByUserId(userId));
   }, [dispatch, userId]);

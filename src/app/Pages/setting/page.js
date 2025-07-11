@@ -26,6 +26,12 @@ export default function SettingPage() {
   const [showAppearance, setShowAppearance] = useState(false);
   const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Pages/Login');
+    }
+  }, []);
   const handleThemeToggle = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);

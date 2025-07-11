@@ -29,7 +29,12 @@ const PostPage = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
     const API_URL =process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app" ;
 
-
+useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Pages/Login');
+    }
+  }, []);
   useEffect(() => {
     if (postId) {
       dispatch(fetchPostById(postId));

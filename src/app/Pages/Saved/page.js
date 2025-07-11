@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaArrowRight, FaBookmark, FaRegFileImage, FaCheckCircle } from "react-icons/fa";
 
 export default function SavedPage() {
 const [removedItem, setRemovedItem] = useState(null);
+  const router = useRouter();
+
   const [savedItems, setSavedItems] = useState([
     {
       id: 1,
@@ -42,6 +45,12 @@ const [removedItem, setRemovedItem] = useState(null);
       date: "2025-06-21 15:30",
     }
   ])
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Pages/Login');
+    }
+  }, []);
   const handleRemove = (id , number) => {
     setRemovedItem(id);
     setTimeout(() => {

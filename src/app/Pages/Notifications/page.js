@@ -1,6 +1,7 @@
 // Notifications Page
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaBell, FaUserCircle, FaComments, FaRegNewspaper, FaUsers, FaArrowLeft } from "react-icons/fa";
 
 const notifications = [
@@ -69,7 +70,15 @@ const notifications = [
     },
 ];
 
-const NotificationsPage = () => (
+const NotificationsPage = () => {
+    const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Pages/Login');
+    }
+  }, []);
   <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-teal-100 py-10 font-[Ruboto,sans-serif]">
     <div className="max-w-2xl mx-auto bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col gap-8">
       <div className="flex flex-col pt-4 sm:flex-row items-center justify-between mb-6 gap-4">
@@ -103,6 +112,6 @@ const NotificationsPage = () => (
       </div> */}
     </div>
   </div>
-);
+}
 
 export default NotificationsPage;
