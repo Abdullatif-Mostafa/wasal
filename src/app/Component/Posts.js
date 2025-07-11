@@ -138,12 +138,13 @@ const handleDeleteComment = (commentId, postId) => {
 const fetchCommentsForPost = (postId) => {
   dispatch(getCommentsForPost(postId));
 }
+const text="تعذر تحميل المنشورات"
 if (loading) return <PostSkeleton count={5} />;
 if (error) return <div style={{ height: "" }} className="w-full h-full flex justify-center ">
   {/* <p style={{ width: "", backgroundColor: "" }} className="sm:w-1/2 lg:w-1/1.5 md:w-1/2.5 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200  text-center  text-cyan-600 font-normal text-xl  rounded-lg p-6 shadow-md mt-15">
     {"لا يوجد اتصال بالانترنت . تعذر تحميل المنشورات يرجي التحقق من اتصالك بالانترنت واعاده المحاولة .."}
   </p> */}
-  <NoInternet/>
+  <NoInternet text={text}/>
 </div>;
 // if (!allPosts.length) return <div style={{ height: "100vh" }} className="w-full h-full text-center text-teal-600 font-bold text-lg rounded-lg p-6 shadow-md mt-7">لا توجد منشورات</div>;
 return (
