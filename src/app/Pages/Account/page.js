@@ -33,6 +33,12 @@ export default function Account() {
   const userId = user?._id;
   console.log("userId ", userId);
   // console.log("posts by user", selectedPost);
+  //   useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     router.push('/Pages/Login');
+  //   }
+  // }, []);
   useEffect(() => {
       dispatch(fetchPostsByUserId(userId));
   }, [dispatch, userId]);
@@ -262,10 +268,10 @@ export default function Account() {
                     className="relative bg-gradient-to-br from-white via-teal-50 to-cyan-100 rounded-2xl shadow-lg p-0 text-right border border-teal-200 hover:shadow-2xl transition-shadow duration-200 mb-0.5"
                   // onClick={() => router.push(`/Pages/Post?id=${post.id}`)}
                   >
-                    <div className="flex justify-between items-center px-6 pt-3 pb-2 border-b bg-teal-50 rounded-t-2xl">
+                    <div className="flex justify-between items-center px-3 pt-3 pb-2 border-b bg-teal-50 rounded-t-2xl">
                       <Link href={`/Pages/${post?.user?._id}`} className="flex items-center justify-center gap-2">
                         <span className="w-12 h-12 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400  text-xl font-bold text-white shadow-md">
-                          <span role="img" aria-label={post?.user?.username || ""} className="mb-2">{post?.user?.username?.[0] || "م"}</span>
+                          {/* <span role="img" aria-label={post?.user?.username || ""} className="mb-2">{post?.user?.username?.[0] || "م"}</span> */}
                         </span>
                         <div>
                           <span className="chakra-heading font-bold text-teal-900 text-lg">{post?.user?.username || "مستخدم مجهول"}</span>
@@ -376,7 +382,7 @@ export default function Account() {
                     </Link>
                     <div className="">
                       {/*اعجاب  */}
-                   <div className="flex justify-between gap-0.5 border-t pt-3 px-6 pb-4 bg-cyan-50 rounded-b-2xl">
+                   <div className="flex justify-between gap-0.5 border-t pt-3 px-3 pb-4 bg-cyan-50 rounded-b-2xl">
                         <div className="relative group">
                           <button
                             href="#"
