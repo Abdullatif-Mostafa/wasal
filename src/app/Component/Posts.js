@@ -80,7 +80,7 @@ const handleDeletePost = async (postId) => {
     try {
       await dispatch(deletePostAsync(postId)).unwrap();
       toast.success("تم حذف المنشور بنجاح!");
-      dispatch(fetchPosts());
+      // dispatch(fetchPosts());
     } catch (err) {
       toast.error("فشل في حذف المنشور");
     }
