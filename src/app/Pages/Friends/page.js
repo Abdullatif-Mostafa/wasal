@@ -7,11 +7,20 @@ import { useEffect } from "react";
 import { getAllUsersAsync } from "@/RTK/Reducers/userSlice";
 import UserCardSkeleton from "@/app/Component/Skeletons/UserCardSkeleton";
 import NoInternet from "@/app/Component/NoInternet";
+import { useRouter } from "next/navigation";
 
 const FriendsPage = () => {
   const { users, loading, error } = useSelector((state) => state.users);
   const dispatch = useDispatch();
+  const router = useRouter();
+  
   console.log("users and error ", users, error);
+    useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Pages/Login');
+    }
+  }, []);
   useEffect(() => {
     dispatch(getAllUsersAsync())
   }, [dispatch]);

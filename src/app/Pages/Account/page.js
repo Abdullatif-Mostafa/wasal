@@ -33,12 +33,12 @@ export default function Account() {
   const userId = user?._id;
   console.log("userId ", userId);
   // console.log("posts by user", selectedPost);
-  //   useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (!token) {
-  //     router.push('/Pages/Login');
-  //   }
-  // }, []);
+    useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Pages/Login');
+    }
+  }, []);
   useEffect(() => {
       dispatch(fetchPostsByUserId(userId));
   }, [dispatch, userId]);

@@ -4,12 +4,14 @@ import io from "socket.io-client";
 import RightAside from "../../Component/RightAside";
 import LeftAside from "../../Component/LeftAside";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const SOCKET_URL = "http://localhost:4000";
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const router=useRouter();
   const [username, setUsername] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const messagesEndRef = useRef(null);
@@ -17,6 +19,12 @@ export default function Chat() {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
   console.log("user in chat page", user)
   // Assuming you have a user state or context
+    useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/Pages/Login');
+    }
+  }, []);
   useEffect(() => {
     socketRef.current = io(SOCKET_URL);
     socketRef.current.on("chat message", (msg) => {

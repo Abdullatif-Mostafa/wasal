@@ -3,6 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaUsers, FaComments, FaRegNewspaper, FaGlobe, FaArrowLeft } from "react-icons/fa";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const groups = [
   {
@@ -47,7 +49,15 @@ const groups = [
   },
 ];
 
-const GroupsPage = () => (
+const GroupsPage = () => {
+    const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/Pages/Login';
+    }
+  }, [])
+return(
   <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-white to-teal-100 py-10 font-[Ruboto,sans-serif]">
     <div className="max-w-4xl mx-auto bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col gap-8">
       <div className="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
@@ -79,6 +89,6 @@ const GroupsPage = () => (
       </div> */}
     </div>
   </div>
-);
-
+)  
+}
 export default GroupsPage;
