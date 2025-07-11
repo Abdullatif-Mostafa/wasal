@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from "@/RTK/Reducers/commentSlice";
 import PostSkeleton from "./Skeletons/PostSkeleton";
+import NoInternet from "./NoInternet";
 // import Image from "next/image";
 
 const Posts = ({ newPosts = [] }) => {
@@ -139,10 +140,10 @@ const fetchCommentsForPost = (postId) => {
 }
 if (loading) return <PostSkeleton count={5} />;
 if (error) return <div style={{ height: "" }} className="w-full h-full flex justify-center ">
-  <p style={{ width: "", backgroundColor: "" }} className="sm:w-1/2 lg:w-1/1.5 md:w-1/2.5 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200  text-center  text-cyan-600 font-normal text-xl  rounded-lg p-6 shadow-md mt-15">
+  {/* <p style={{ width: "", backgroundColor: "" }} className="sm:w-1/2 lg:w-1/1.5 md:w-1/2.5 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200  text-center  text-cyan-600 font-normal text-xl  rounded-lg p-6 shadow-md mt-15">
     {"لا يوجد اتصال بالانترنت . تعذر تحميل المنشورات يرجي التحقق من اتصالك بالانترنت واعاده المحاولة .."}
-  </p>
-
+  </p> */}
+  <NoInternet/>
 </div>;
 // if (!allPosts.length) return <div style={{ height: "100vh" }} className="w-full h-full text-center text-teal-600 font-bold text-lg rounded-lg p-6 shadow-md mt-7">لا توجد منشورات</div>;
 return (

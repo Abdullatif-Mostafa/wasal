@@ -30,20 +30,6 @@ const FriendsPage = () => {
             حسابي
           </Link>
         </div>
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {users?.map(user => (
-            <div key={user?._id} className="bg-cyan-50 rounded-2xl shadow p-6 flex flex-col items-center hover:shadow-2xl transition group relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-teal-400 to-cyan-400 opacity-60 group-hover:opacity-100 transition"></div>
-              <div className="w-20 h-20 rounded-full overflow-hidden bg-gradient-to-br from-teal-400 to-cyan-400 flex items-center justify-center mb-3 border-4 border-white shadow-lg group-hover:scale-105 transition-transform">
-                <img src={user?.profileImage || "/file.svg" } alt={"user"} width={80} height={80} className="object-cover rounded-full"/>
-              </div>
-              <h3 className="text-xl font-bold text-teal-800 group-hover:text-cyan-600 transition-colors">{user.username}</h3>
-              <p className="text-gray-600 text-sm mt-1 mb-2 text-center">{user?.bio || "لا يوجد وصف للمستخدم"}</p>
-              <span className="text-xs text-cyan-700 mb-2">عضو منذ: {user.createdAt}</span>
-              <Link href={`/Pages/${user._id}`} className="mt-2 px-4 py-1 bg-cyan-500 text-white rounded-full hover:bg-teal-600 transition text-sm font-semibold shadow group-hover:scale-105">عرض الحساب</Link>
-            </div>
-          ))}
-        </div> */}
         {loading ? <UserCardSkeleton count={6} /> : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {users?.map(user => (
