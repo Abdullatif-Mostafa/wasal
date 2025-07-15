@@ -8,10 +8,10 @@ import { Toaster } from "react-hot-toast";
 // import Home from "./Component/Header/page"
 export default function RootLayout({ children }) {
   return (
-
     <html lang="ar" dir="rtl">
        <head>
         <meta charSet="utf-8"></meta>
+        <meta name="viewport" content="width = device-width,initial-scale=1"></meta>
         <meta name="" description="موقع تواصل اجتماعي يتيح لك التواصل مع الاهل والاصدقاء والاحباب وهو شبيه بموقع فيس بوك"></meta>
         <title>وصال</title>
        </head>

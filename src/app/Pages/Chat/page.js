@@ -11,7 +11,7 @@ const SOCKET_URL = "http://localhost:4000";
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const router=useRouter();
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const messagesEndRef = useRef(null);
@@ -19,7 +19,7 @@ export default function Chat() {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
   console.log("user in chat page", user)
   // Assuming you have a user state or context
-    useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       router.push('/Pages/Login');
@@ -27,7 +27,7 @@ export default function Chat() {
   }, []);
   useEffect(() => {
     socketRef.current = io(SOCKET_URL);
-    socketRef.current.on("chat message", (msg) => {
+    socketRef.current?.on("chat message", (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
     socketRef.current.on("connect", () => setIsConnected(true));
@@ -65,45 +65,50 @@ export default function Chat() {
                 <svg className="w-7 h-7 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V10a2 2 0 012-2h2"></path><path strokeLinecap="round" strokeLinejoin="round" d="M12 15v-6m0 0l-3 3m3-3l3 3" /></svg>
                 غرفة الدردشة
               </h2>
-              <span className={`text-xs font-bold ${isConnected ? 'text-green-600' : 'text-red-600'}`}>{isConnected ? 'متصل' : 'غير متصل'}</span>
             </div>
-            <div className="flex items-center gap-2 mb-4">
-              <input
+            <div className="flex items-center justify-between gap-2 mb-4 px-5">
+              {/* <input
                 className="flex-1 px-3 py-2 border border-teal-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-right bg-white/80 dark:bg-gray-800/80 text-black dark:text-white shadow"
                 placeholder="ادخل اسم المستخدم (اختياري)"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 maxLength={20}
-              />
+                /> */}
+              <div className="flex items-center gap-2">
+                <span className="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-white font-bold">{user?.username.charAt(0)}</span>
+                <span className="text-white font-semibold">{user?.username}</span>
+              </div>        
+             <span className={`text-xs font-bold ${isConnected ? 'text-green-600' : 'text-red-600'}`}>{isConnected ? 'متصل' : 'غير متصل'}</span>
             </div>
             <div className="flex-1 overflow-y-auto space-y-3 p-2 bg-white/70 dark:bg-gray-800/60 rounded-lg mb-4 transition-colors duration-300">
-              {messages.map((msg, idx) => (
-                <div key={idx} className={`flex ${msg.user !== msg.user ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[70%] px-4 py-2 rounded-2xl shadow-md ${msg.user === username ? 'bg-gradient-to-l from-teal-500 via-cyan-400 to-teal-400 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100'}`}>
+              {messages.map((msg, idx)=>(
+                <div key={idx} className={`flex ${msg.user !== user.username ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[70%] px-4 py-2 rounded-2xl shadow-md ${msg.user !== user.username ? 'bg-gradient-to-l from-teal-500 via-cyan-400 to-teal-400 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100'}`}>
                     <div className="flex items-center justify-between gap-4 mb-1">
-                      <span className="font-bold text-sx trxt-dark dark:text-teal-200">{msg.user}</span>
-                      <span className="text-[10px] font-bold text-teal-600">{msg.time}</span>
+                      <span className="font-bold text-sx">{msg.user}</span>
+                      <span className={`text-[10px] font-bold text-dark  ${msg.user !== user.username ? 'text-dark' : 'text-teal-600'}`}>{msg.time}</span>
                       {/* {console.log("message ",msg)} */}
                     </div>
                     <p className="break-words text-right mb-2">{msg.text}</p>
-                 {msg.user &&
-                    <div className="flex gap-3">
-                      <button
-                        // onClick={() => { handleEditComment(comment._id, comment.content, post._id) }}
-                        className="text-yellow-600 hover:text-yellow-800 text-xs font-semibold"
-                        title="تعديل الرساله"
-                      >
-                        ✏️ تعديل
-                      </button>
-                      <button
-                        // onClick={() => handleDeleteComment(comment._id, post._id)}
-                        className="text-red-600 hover:text-red-800 text-xs font-semibold"
-                        title="حذف الرساله"
-                      >
-                        🗑️ حذف
-                      </button>
-                    </div>
-                 }
+                    {/* {msg.user !== user.username && <span className="text-xs text-gray-500">تم الإرسال بواسطة {msg.user}</span>} */}
+                    {msg.user === user.username &&
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => { console.log("user msg ", msg.text) }}
+                          className="text-yellow-600 hover:text-yellow-800 text-xs font-semibold"
+                          title="تعديل الرساله"
+                        >
+                          ✏️ تعديل
+                        </button>
+                        <button
+                          // onClick={() => handleDeleteComment(comment._id, post._id)}
+                          className="text-red-600 hover:text-red-800 text-xs font-semibold"
+                          title="حذف الرساله"
+                        >
+                          🗑️ حذف
+                        </button>
+                      </div>
+                    }
                   </div>
                 </div>
               ))}
