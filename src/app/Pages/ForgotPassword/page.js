@@ -2,7 +2,10 @@
 import { useState } from "react";
 import { FaEnvelope, FaUnlockAlt } from "react-icons/fa";
 import Link from "next/link";
-
+const metadata={
+  title:"نسيت كلمه المرور",
+  description:" صفحه عرض نسيت كلمه المرور وتمكني من اعاده تعيينها"
+}
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState("");

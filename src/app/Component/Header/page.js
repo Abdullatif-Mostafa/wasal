@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import { FaComments, FaBell, FaHome, FaUserCircle } from "react-icons/fa";
 import toast from "react-hot-toast";
 // import 'animate.css';
-
 const Nav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);

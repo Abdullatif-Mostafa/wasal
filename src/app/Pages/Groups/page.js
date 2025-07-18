@@ -6,6 +6,11 @@ import { FaUsers, FaComments, FaRegNewspaper, FaGlobe, FaArrowLeft } from "react
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+const metadata={
+  title:"الجروبات",
+  description:"هذه الصفحه تعرض الجروبات التي مشترك فيها المستخدم"
+}
+
 const groups = [
   {
     id: 1,

@@ -9,6 +9,10 @@ import UserCardSkeleton from "@/app/Component/Skeletons/UserCardSkeleton";
 import NoInternet from "@/app/Component/NoInternet";
 import { useRouter } from "next/navigation";
 
+const metadata={
+  title:" الاصدقاء",
+  description:"صفحة الاصدقاء تعرض جميع الاصدقاء الموجودين علي الموقع."
+}
 const FriendsPage = () => {
   const { users, loading, error } = useSelector((state) => state.users);
   const dispatch = useDispatch();

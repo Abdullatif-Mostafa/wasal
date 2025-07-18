@@ -25,7 +25,10 @@ export default function SettingPage() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showAppearance, setShowAppearance] = useState(false);
   const router = useRouter();
-
+ const metadata={
+  title:"الاعدادت",
+  description:"صفحه لعرض الاعدادات الموجوده في الموقع"
+ }
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {

@@ -7,7 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { registerAsync } from "@/RTK/Reducers/authSlice";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
+const metadate={
+  title:"تسجيل مستخدم جديد",
+  description:"صفحه عرض تسجيل مستخدم جديد من خلال اسم المستخدم واميله وكلمه المرور"
+}
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");

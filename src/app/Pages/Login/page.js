@@ -7,6 +7,10 @@ import { loginAsync } from "@/RTK/Reducers/authSlice";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
+const metadata={
+  titel:"صفحه تسجيل الدخول",
+  description:"صفحه تسجيل دخول المستخدم "
+}
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

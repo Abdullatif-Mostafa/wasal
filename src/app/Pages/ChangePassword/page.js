@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
-
+const metadata={
+  title:"تغيير كلمه المرور",
+  description:"صفحه لعرض تغيير كلمه المرور"
+}
 export default function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");

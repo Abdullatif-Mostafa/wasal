@@ -10,7 +10,10 @@ import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment
 import PostSkeleton from "./Skeletons/PostSkeleton";
 import NoInternet from "./NoInternet";
 // import Image from "next/image";
-
+const metadata={
+  title:"المنشورات",
+  description:"صفحة المنشورات تعرض جميع المنشورات الخاصة بموقع وصال والتي تعرض جميع منشورات الاصدقاء الموجودين ععلي الموقع."
+}
 const Posts = ({ newPosts = [] }) => {
   // const [data, setData] = useState([]);
   const [editModal, setEditModal] = useState({ open: false, post: null });

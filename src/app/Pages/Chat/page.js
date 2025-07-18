@@ -6,12 +6,16 @@ import LeftAside from "../../Component/LeftAside";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
+const metadata={
+  title:"صفحه المحادثه",
+  description:" صفحه المحادثه تعرض جميع المحادثات التي تم انشائها من قبل المستخدم."
+}
 const SOCKET_URL = "http://localhost:4000";
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const router = useRouter();
+  const  router = useRouter();
   const [username, setUsername] = useState("");
   const [isConnected, setIsConnected] = useState(false);
   const messagesEndRef = useRef(null);
@@ -24,9 +28,16 @@ export default function Chat() {
     if (!token) {
       router.push('/Pages/Login');
     }
-  }, []);
+  },[]);
   useEffect(() => {
-    socketRef.current = io(SOCKET_URL);
+    socketRef.current = io(SOCKET_URL, {
+      auth: {
+        token: localStorage.getItem('token') || null,
+      },
+      transports: ['websocket'],
+      reconnectionAttempts: 5,
+    }
+    );
     socketRef.current?.on("chat message", (msg) => {
       setMessages((prev) => [...prev, msg]);
     });

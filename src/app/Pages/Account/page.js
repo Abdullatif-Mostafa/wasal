@@ -11,7 +11,10 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import PostSkeleton from "@/app/Component/Skeletons/PostSkeleton";
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from "@/RTK/Reducers/commentSlice";
-
+const metadata={
+  title:"صفحه الحساب ",
+  description:" وكذلك تعرض بيانات المستخدم الشخصيه صفحه الحساب تعرض جميع المنشورات والتعليقات التي تم انشائها من قبل المستخدم."
+}
 export default function Account() {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
   const { posts } = useSelector((state) => state.posts)

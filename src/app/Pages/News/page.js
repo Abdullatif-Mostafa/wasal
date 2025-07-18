@@ -5,6 +5,11 @@ import Image from "next/image";
 import { FaRegNewspaper, FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
+const metadata={
+  title:"الاخبار",
+  description:"صفحه الاخبار هي صفحه لعرض الاخبار الخاصه بالمستخدم"
+}
+
 const newsList = [
   {
     id: 1,

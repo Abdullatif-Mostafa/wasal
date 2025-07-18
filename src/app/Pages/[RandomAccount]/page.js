@@ -12,6 +12,10 @@ import PostSkeleton from '@/app/Component/Skeletons/PostSkeleton';
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from '@/RTK/Reducers/commentSlice';
 import Swal from 'sweetalert2';
 
+const metadata={
+  title:"حساب متغيير",
+  description:"صفحه لعرض حساب الاشخاص بناءة علي ال id الخاص فيه "
+}
 export default function Page() {
   const dispatch = useDispatch();
   const router = useRouter();

@@ -4,6 +4,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaArrowRight, FaBookmark, FaRegFileImage, FaCheckCircle } from "react-icons/fa";
 
+const metedata={
+  title:"العناصر المحفوظه",
+  description:"هذه صحفه لعرض العناصر التي تم حفظها من قبل المستخدم"
+}
 export default function SavedPage() {
 const [removedItem, setRemovedItem] = useState(null);
   const router = useRouter();
