@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaRegNewspaper, FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const metadata={
   title:"الاخبار",

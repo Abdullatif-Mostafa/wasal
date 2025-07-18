@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMoon, FaSun, FaBell, FaUserShield, FaLock, FaLanguage, FaPalette, FaUserEdit, FaTrashAlt, FaChevronDown, FaChevronUp, FaLightbulb, FaChevronLeft, FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/RTK/Reducers/authSlice";
