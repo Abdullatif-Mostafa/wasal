@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import { FaArrowRight, FaBookmark, FaRegFileImage, FaCheckCircle } from "react-icons/fa";
 
 const metedata={
