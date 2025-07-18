@@ -7,6 +7,11 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsersAsync } from "@/RTK/Reducers/userSlice";
 
+const metadata={
+  title:"الشريط الجانبي الايمن ",
+  description:"صفحة الشريط الجانبي الايمن وتعرض فيها قائمة الأصدقاء والمحادثات الأخيرة.",
+  keywords:"RightAside, chat, friends, recent chats, search bar, suggested friends",
+}
 const suggestedFriends = [
   { name: "محمود", initial: "م", color: "bg-teal-400" },
   { name: "سارة", initial: "س", color: "bg-cyan-400" },

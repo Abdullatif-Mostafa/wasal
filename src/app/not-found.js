@@ -2,6 +2,11 @@
 import Link from "next/link";
 import { FaExclamationTriangle } from "react-icons/fa";
 
+const metadata={
+  tile:"الصفحة غير موجودة",
+  description:"هذه الصفحة غير موجودة أو تم نقلها. يرجى العودة للصفحة الرئيسية."
+  
+}
 export default function NotFound() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-cyan-50 via-white to-teal-100 p-8">

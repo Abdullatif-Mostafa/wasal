@@ -1,6 +1,9 @@
 import React from "react";
 import { IconBase } from "react-icons";
-
+const metadata={
+    title:" لا يوجد اتصال بالانترنت",
+    description:"صفحه لعرض عدم وجود اتصال بالانترنت"
+}
 const NoInternet = ({ text }) => {
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] w-full bg-gradient-to-br from-cyan-50 to-teal-100 rounded-2xl shadow-lg p-6">

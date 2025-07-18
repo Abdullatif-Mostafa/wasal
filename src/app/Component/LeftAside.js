@@ -4,6 +4,10 @@
 import Link from "next/link";
 import { FaComments, FaRegNewspaper, FaUserCircle, FaLightbulb, FaBell } from "react-icons/fa";
 
+const metadata = {
+  title: "الشريط الجانبي الأيسر",
+  description: "هذا الشريط الجانبي يحتوي على معلومات الدردشة والمجموعات.",
+};
 const tips = [
   "استخدم الدردشة للتواصل الفوري مع أصدقائك!",
   "يمكنك تخصيص حسابك من صفحة الحساب.",
