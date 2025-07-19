@@ -30,9 +30,9 @@ const RightAside = ({ chatMode }) => {
   const [search, setSearch] = useState("");
   const filteredFriends = suggestedFriends.filter(f => f.name.includes(search));
   const { users, loading } = useSelector((state) => state.users);
-  console.log("users in right aside", users);
+  // console.log("users in right aside", users);
   const dispatch = useDispatch();
-  console.log("users ", users);
+  // console.log("users ", users);
   useEffect(() => {
     dispatch(getAllUsersAsync())
   }, [dispatch]);

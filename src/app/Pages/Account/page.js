@@ -415,13 +415,13 @@ export default function Account() {
                           <div>
                             {post?.likes?.length > 0 ? (
                               post?.likes?.map((like) => (
-                                <div key={like._id} className="flex items-center gap-2 px-3 py-1 rounded-lg hover:bg-cyan-100 text-cyan-700 font-semibold cursor-pointer transition-colors">
+                                <Link href={`/Pages/${like?._id}`} key={like._id} className="flex items-center gap-2 px-3 py-1 rounded-lg hover:bg-cyan-100 text-cyan-700 font-semibold cursor-pointer transition-colors">
                                   <span className="w-6 h-6 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 text-white font-bold">
                                     {like.username?.[0] || "م"}
                                     {/* { console.log("llike details",like) } */}
                                   </span>
                                   <span className="text-sm">{like.username || "مستخدم مجهول"}</span>
-                                </div>
+                                </Link>
                               ))
                             ) : (
                               <div className="text-gray-500 text-sm">

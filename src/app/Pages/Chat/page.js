@@ -21,6 +21,25 @@ export default function Chat() {
   const socketRef = useRef(null);
   const { user, isAuthenticated } = useSelector((state) => state.auth);
 
+  const getingMessages=async()=>{
+    fetch('http://localhost:4000/api/messages/6851982403af215b4a14c015')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("messages data",data);
+        if (data.status === "success") {
+          setMessages(data.messages);
+        } else {
+          console.error("Error fetching messages:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching messages:", error);
+      });
+  }
+  useEffect(()=>{
+    getingMessages()
+  },[input])
+
   // تأكد من وجود التوكن وإلا انقل المستخدم
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -47,14 +66,13 @@ export default function Chat() {
     socketRef.current.on("disconnect", () => setIsConnected(false));
 
     socketRef.current.on("new-message", (msg) => {
+      console.log("new-message", msg);
       setMessages((prev) => [...prev, msg]);
     });
-
     return () => {
       socketRef.current.disconnect();
     };
   }, []);
-
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -63,7 +81,7 @@ export default function Chat() {
   const sendMessage = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-
+    console.log("input ==== ",input)
     const dummyConversationId = "6851982403af215b4a14c015"; 
 
     socketRef.current.emit("send-message", {
@@ -72,6 +90,7 @@ export default function Chat() {
     });
     setInput("");
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 via-white to-teal-100 font-[Ruboto,sans-serif]">
       <div className="flex w-full max-w-screen-2xl mx-auto">
