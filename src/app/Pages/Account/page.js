@@ -11,9 +11,9 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import PostSkeleton from "@/app/Component/Skeletons/PostSkeleton";
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from "@/RTK/Reducers/commentSlice";
-const metadata={
-  title:"صفحه الحساب ",
-  description:" وكذلك تعرض بيانات المستخدم الشخصيه صفحه الحساب تعرض جميع المنشورات والتعليقات التي تم انشائها من قبل المستخدم."
+const metadata = {
+  title: "صفحه الحساب ",
+  description: " وكذلك تعرض بيانات المستخدم الشخصيه صفحه الحساب تعرض جميع المنشورات والتعليقات التي تم انشائها من قبل المستخدم."
 }
 export default function Account() {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
@@ -32,19 +32,19 @@ export default function Account() {
   const [activeCommentPostId, setActiveCommentPostId] = useState(null);
   const { loading: commentsLoading, error: commentsError, commentsMap } = useSelector((state) => state.comments);
   const [theme, setTheme] = useState("light");
-  const API_URL =process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app" ;
+  const API_URL = process.env.REACT_APP_API_URL || "https://wasal-api-production.up.railway.app";
   const userId = user?._id;
   console.log("userId ", userId);
   // console.log("posts by user", selectedPost);
-    useEffect(() => {
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
       router.push('/Pages/Login');
     }
   }, []);
-  
+
   useEffect(() => {
-      dispatch(fetchPostsByUserId(userId));
+    dispatch(fetchPostsByUserId(userId));
   }, [dispatch, userId]);
 
   const stats = {
@@ -69,7 +69,7 @@ export default function Account() {
       cancelButtonText: 'إلغاء',
       reverseButtons: true,
       showLoaderOnConfirm: true,
-      customClass: { popup: 'rounded-2xl w-[90%] sm:w-[400px]',width:"200px" },
+      customClass: { popup: 'rounded-2xl w-[90%] sm:w-[400px]', width: "200px" },
       showClass: { popup: "animate__animated animate__fadeInDown" },
       hideClass: { popup: "animate__animated animate__fadeOutUp" },
     });
@@ -178,7 +178,7 @@ export default function Account() {
     }
   };
   const handleLike = (post) => {
-    console.log("post in the handleLike ", post); 
+    console.log("post in the handleLike ", post);
     if (!isAuthenticated && !user) {
       toast.error('يجب تسجيل الدخول للإعجاب بالمنشور');
       return;
@@ -200,7 +200,7 @@ export default function Account() {
   };
   return (
     <div className={`min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 via-white to-teal-100 font-[Ruboto,sans-serif] py-10 ${theme === "dark" ? "dark" : ""}`}>
-      <div className="w-full max-w-2xl bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
+      <div className="w-full max-w-2xl bg-white/90 rounded-3xl shadow-2xl py-8 px-5 sm:px-3 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
         {/* Settings Dropdown */}
         <div className="absolute top-4 mt-3 right-4">
           <Link href="/" className=" justify-start px-4 py-2 bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white rounded-full font-bold shadow hover:from-cyan-400 hover:to-teal-500 transition-colors text-sm flex items-center gap-2">
@@ -260,11 +260,12 @@ export default function Account() {
         </div>
 
         {/* Recent Posts */}
-        <div className="w-full bg-white/80 rounded-xl shadow p-4 flex flex-col gap-2 mt-2">
+        <div className="w-full rounded-xl  pt-0 flex flex-col gap-2 mt-2">
           <h3 className="text-cyan-700 font-bold mb-1">أحدث المنشورات</h3>
           {Array.isArray(posts) && posts.length !== 0 ? (
-            <ul className="flex flex-col gap-2">
+            <ul className='flex flex-col gap-0.5'>
               {posts?.map((post) => {
+                const hasLiked = post.likes?.includes(user?._id);
                 return (
                   <div
                     key={post._id}
@@ -274,8 +275,8 @@ export default function Account() {
                   >
                     <div className="flex justify-between items-center px-3 pt-3 pb-2 border-b bg-teal-50 rounded-t-2xl">
                       <Link href={`/Pages/${post?.user?._id}`} className="flex items-center justify-center gap-2">
-                        <span className="w-12 h-12 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400  text-xl font-bold text-white shadow-md">
-                          {/* <span role="img" aria-label={post?.user?.username || ""} className="mb-2">{post?.user?.username?.[0] || "م"}</span> */}
+                        <span className="w-10 h-10 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400  text-xl font-bold text-white shadow-md">
+                          <span role="img" aria-label={post?.user?.username || ""} className="mb-2">{post?.user?.username?.[0] || "م"}</span>
                         </span>
                         <div>
                           <span className="chakra-heading font-bold text-teal-900 text-lg">{post?.user?.username || "مستخدم مجهول"}</span>
@@ -325,15 +326,12 @@ export default function Account() {
                                 </button>
                               )
                             }
-
                             {post?.user?._id === user?._id && (
-
                               <>
                                 <button
                                   onClick={() => {
-                                    // استدعاء دالة تعديل البوست هنا مثلاً: openEditModal(post)
                                     console.log("تعديل البوست", post._id);
-                                    setEditModal({ open: true, post }); // ✅ فتح المودال مع بيانات البوست
+                                    setEditModal({ open: true, post });
                                     setOpenMenuId(false);
                                   }}
                                   className="flex items-center cursor-pointer gap-2 px-3 py-2 bg-white rounded-lg shadow hover:bg-yellow-50 text-yellow-600"
@@ -370,7 +368,7 @@ export default function Account() {
                     </div>
                     <Link href={`/Pages/postDetails/${post._id}`}>
                       <div className="px-6 pb-0 pt-2">
-                        <p className="text-lg font-semibold mb-2 text-teal-800">{post.description || "لا يوجد محتوى"}</p>
+                        <p className="text-lg font-semibold mb-2 text-teal-800">{post.description}</p>
                         {/* <p className="text-gray-700 mb-2 break-words leading-relaxed">{post.description || "لا يوجد محتوى"}</p> */}
                       </div>
                       {post.image && (
@@ -379,106 +377,105 @@ export default function Account() {
                             alt={post.image}
                             className="max-h-75 object-cover w-full border border-teal-200"
                             src={post.image.startsWith('http') ? post.image : `${API_URL}/${post.image}`}
-                            // src={`http://localhost:4000/${post.image}`}
+                          // src={`http://localhost:4000/${post.image}`}
                           />
                         </div>
                       )}
                     </Link>
-                    <div className="">
+                    {/* <div className=""> */}
+                    <div className="flex justify-between gap-0 border-t pt-3 px-1 pb-4 bg-cyan-50 rounded-b-2xl">
                       {/*اعجاب  */}
-                   <div className="flex justify-between gap-0.5 border-t pt-3 px-3 pb-4 bg-cyan-50 rounded-b-2xl">
-                        <div className="relative group">
-                          <button
-                            href="#"
-                            type="button"
-                            onClick={() => handleLike(post)}
-                            className={`${post.likes.some(like => like._id === user?._id)
-                              ? "text-red-500"
-                              : "text-cyan-700"
-                              } flex items-center gap-1 px-3 py-1 rounded-lg hover:bg-cyan-100 font-semibold cursor-pointer transition-colors`}
-                          >
-                            <span className="chakra-button__icon">
-                              <svg
-                                stroke="currentColor"
-                                fill="currentColor"
-                                strokeWidth="0"
-                                viewBox="0 0 24 24"
-                                height="1.2em"
-                                width="1.2em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M20 8h-5.612l1.123-3.367c.202-.608.1-1.282-.275-1.802S14.253 2 13.612 2H12c-.297 0-.578.132-.769.36L6.531 8H4c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h13.307a2.01 2.01 0 0 0 1.873-1.298l2.757-7.351A1 1 0 0 0 22 12v-2c0-1.103-.897-2-2-2zM4 10h2v9H4v-9zm16 1.819L17.307 19H8V9.362L12.468 4h1.146l-1.562 4.683A.998.998 0 0 0 13 10h7v1.819z"></path>
-                              </svg>
-                            </span>
-                            أعجبني ({post?.likes?.length || 0})
-                            {/* {console.log("post.likes",post.likes.some(like => like._id === user?._id))} */}
-                          </button>
-                          <div className="absolute  top-8 z-40 min-w-[180px] bg-white border border-cyan-200 rounded-xl shadow-lg p-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto">
-                            <div>
-                              {post?.likes?.length > 0 ? (
-                                post?.likes?.map((like) => (
-                                  <div key={like._id} className="flex items-center gap-2 px-3 py-1 rounded-lg hover:bg-cyan-100 text-cyan-700 font-semibold cursor-pointer transition-colors">
-                                    <span className="w-6 h-6 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 text-white font-bold">
-                                      {like.username?.[0] || "م"} 
-                                      {/* { console.log("llike details",like) } */}
-                                    </span>
-                                    <span className="text-sm">{like.username || "مستخدم مجهول"}</span>
-                                  </div>
-                                ))
-                              ) : (
-                                <div className="text-gray-500 text-sm">
-                                  لا يوجد إعجابات بعد
+                      <div className="relative group">
+                        <button
+                          href="#"
+                          type="button"
+                          onClick={() => handleLike(post)}
+                          className={`${post.likes.some(like => like._id === user?._id)
+                            ? "text-red-500"
+                            : "text-cyan-700"
+                            } flex items-center gap-1 px-3 py-1 rounded-lg hover:bg-cyan-100 font-semibold cursor-pointer transition-colors`}
+                        >
+                          <span className="chakra-button__icon">
+                            <svg
+                              stroke="currentColor"
+                              fill="currentColor"
+                              strokeWidth="0"
+                              viewBox="0 0 24 24"
+                              height="1.2em"
+                              width="1.2em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M20 8h-5.612l1.123-3.367c.202-.608.1-1.282-.275-1.802S14.253 2 13.612 2H12c-.297 0-.578.132-.769.36L6.531 8H4c-1.103 0-2 .897-2 2v9c0 1.103.897 2 2 2h13.307a2.01 2.01 0 0 0 1.873-1.298l2.757-7.351A1 1 0 0 0 22 12v-2c0-1.103-.897-2-2-2zM4 10h2v9H4v-9zm16 1.819L17.307 19H8V9.362L12.468 4h1.146l-1.562 4.683A.998.998 0 0 0 13 10h7v1.819z"></path>
+                            </svg>
+                          </span>
+                          أعجبني ({post?.likes?.length || 0})
+                          {/* {console.log("post.likes",post.likes.some(like => like._id === user?._id))} */}
+                        </button>
+                        <div className="absolute  top-8 z-40 min-w-[180px] bg-white border border-cyan-200 rounded-xl shadow-lg p-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto">
+                          <div>
+                            {post?.likes?.length > 0 ? (
+                              post?.likes?.map((like) => (
+                                <div key={like._id} className="flex items-center gap-2 px-3 py-1 rounded-lg hover:bg-cyan-100 text-cyan-700 font-semibold cursor-pointer transition-colors">
+                                  <span className="w-6 h-6 flex justify-center items-center rounded-full bg-gradient-to-br from-teal-400 to-cyan-400 text-white font-bold">
+                                    {like.username?.[0] || "م"}
+                                    {/* { console.log("llike details",like) } */}
+                                  </span>
+                                  <span className="text-sm">{like.username || "مستخدم مجهول"}</span>
                                 </div>
-                              )
-                              }
-                            </div>
+                              ))
+                            ) : (
+                              <div className="text-gray-500 text-sm">
+                                لا يوجد إعجابات بعد
+                              </div>
+                            )
+                            }
                           </div>
                         </div>
-                        {/* تعليق  */}
+                      </div>
+                      {/* تعليق  */}
+                      <button
+                        type="button"
+                        onClick={() => { setActiveCommentPostId(activeCommentPostId === post._id ? null : post._id), fetchCommentsForPost(post?._id) }}
+                        className="flex items-center gap-1 px-3 py-1 rounded-lg hover:bg-cyan-100 font-semibold text-cyan-700 cursor-pointer transition-colors"
+                      >
+                        <span className="chakra-button__icon">
+                          <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M5 18v3.766l1.515-.909L11.277 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h1.277L7 21.766V18H4V8h12v8h-5.277L7 21.766V18H4V8z"></path><path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path></svg>
+                        </span>
+                        تعليق ({commentsMap[post._id]?.length ?? post?.comments?.length ?? 0})
+                      </button>
+                      {/*  مشاركة */}
+                      <div className="relative group">
                         <button
                           type="button"
-                          onClick={() => { setActiveCommentPostId(activeCommentPostId === post._id ? null : post._id), fetchCommentsForPost(post?._id) }}
                           className="flex items-center gap-1 px-3 py-1 rounded-lg hover:bg-cyan-100 font-semibold text-cyan-700 cursor-pointer transition-colors"
                         >
                           <span className="chakra-button__icon">
-                            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M5 18v3.766l1.515-.909L11.277 18H16c1.103 0 2-.897 2-2V8c0-1.103-.897-2-2-2H4c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h1.277L7 21.766V18H4V8h12v8h-5.277L7 21.766V18H4V8z"></path><path d="M20 2H8c-1.103 0-2 .897-2 2h12c1.103 0 2 .897 2 2v8c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"></path></svg>
+                            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M11 7.05V4a1 1 0 0 0-1-1 1 1 0 0 0-.7.29l-7 7a1 1 0 0 0 0 1.42l7 7A1 1 0 0 0 11 18v-3.1h.85a10.89 10.89 0 0 1 8.36 3.72 1 1 0 0 0 1.11.35A1 1 0 0 0 22 18c0-9.12-8.08-10.68-11-10.95zm.85 5.83a14.74 14.74 0 0 0-2 .13A1 1 0 0 0 9 14v1.59L4.42 11 9 6.41V8a1 1 0 0 0 1 1c.91 0 8.11.2 9.67 6.43a13.07 13.07 0 0 0-7.82-2.55z"></path></svg>
                           </span>
-                          تعليق ({commentsMap[post._id]?.length ?? post?.comments?.length ?? 0})
+                          مشاركة
                         </button>
-                        {/*  مشاركة */}
-                        <div className="relative group">
-                          <button
-                            type="button"
-                            className="flex items-center gap-1 px-3 py-1 rounded-lg hover:bg-cyan-100 font-semibold text-cyan-700 cursor-pointer transition-colors"
-                          >
-                            <span className="chakra-button__icon">
-                              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M11 7.05V4a1 1 0 0 0-1-1 1 1 0 0 0-.7.29l-7 7a1 1 0 0 0 0 1.42l7 7A1 1 0 0 0 11 18v-3.1h.85a10.89 10.89 0 0 1 8.36 3.72 1 1 0 0 0 1.11.35A1 1 0 0 0 22 18c0-9.12-8.08-10.68-11-10.95zm.85 5.83a14.74 14.74 0 0 0-2 .13A1 1 0 0 0 9 14v1.59L4.42 11 9 6.41V8a1 1 0 0 0 1 1c.91 0 8.11.2 9.67 6.43a13.07 13.07 0 0 0-7.82-2.55z"></path></svg>
-                            </span>
-                            مشاركة
+                        <div className="absolute left-0 top-8 z-40 min-w-[180px] bg-white border border-cyan-200 rounded-xl shadow-lg p-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto">
+                          <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/Pages/postDetails/' + post._id)}`, '_blank'); setOpenMenuId(false); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-cyan-700">
+                            <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0" /></svg>
+                            فيسبوك
                           </button>
-                          <div className="absolute left-0 top-8 z-40 min-w-[180px] bg-white border border-cyan-200 rounded-xl shadow-lg p-2 flex flex-col gap-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto group-focus-within:pointer-events-auto">
-                            <button onClick={() => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/Pages/postDetails/' + post._id)}`, '_blank'); setOpenMenuId(false); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-cyan-700">
-                              <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.797.143v3.24l-1.918.001c-1.504 0-1.797.715-1.797 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116C23.406 24 24 23.408 24 22.674V1.326C24 .592 23.406 0 22.675 0" /></svg>
-                              فيسبوك
-                            </button>
-                            <button onClick={() => { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.origin + '/Pages/postDetails/' + post._id)}`, '_blank'); setOpenMenuId(false); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-green-600">
-                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.519-5.688-1.515l-6.305 1.721zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-2.64-1.026-5.122-2.891-6.989-1.863-1.866-4.354-2.899-6.991-2.9-5.451 0-9.887 4.434-9.889 9.884-.001 1.956.572 3.86 1.661 5.499l-.999 3.637 3.828-1.048zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.174.2-.298.3-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.363.709.306 1.262.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z" /></svg>
-                              واتساب
-                            </button>
-                            <button onClick={() => { window.open(`https://www.instagram.com/?url=${encodeURIComponent(window.location.origin + '/Pages/postDetails/' + post._id)}`, '_blank'); setOpenMenuId(false); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-pink-500">
-                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.242 1.308 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.242 1.246-3.608 1.308-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.242-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608C4.515 2.497 5.783 2.225 7.149 2.163 8.415 2.105 8.795 2.163 12 2.163zm0-2.163C8.741 0 8.332.012 7.052.07 5.771.128 4.659.334 3.678 1.315c-.98.98-1.187 2.092-1.245 3.373C2.012 8.332 2 8.741 2 12c0 3.259.012 3.668.07 4.948.058 1.281.265 2.393 1.245 3.373.98.98 2.092 1.187 3.373 1.245C8.332 23.988 8.741 24 12 24s3.668-.012 4.948-.07c1.281-.058 2.393-.265 3.373-1.245.98-.98 1.187-2.092 1.245-3.373.058-1.28.07-1.689.07-4.948 0-3.259-.012-3.668-.07-4.948-.058-1.281-.265-2.393-1.245-3.373-.98-.98-2.092-1.187-3.373-1.245C15.668.012 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" /></svg>
-                              انستغرام
-                            </button>
+                          <button onClick={() => { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.origin + '/Pages/postDetails/' + post._id)}`, '_blank'); setOpenMenuId(false); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-green-600">
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.519-5.688-1.515l-6.305 1.721zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-2.64-1.026-5.122-2.891-6.989-1.863-1.866-4.354-2.899-6.991-2.9-5.451 0-9.887 4.434-9.889 9.884-.001 1.956.572 3.86 1.661 5.499l-.999 3.637 3.828-1.048zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.174.2-.298.3-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.363.709.306 1.262.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z" /></svg>
+                            واتساب
+                          </button>
+                          <button onClick={() => { window.open(`https://www.instagram.com/?url=${encodeURIComponent(window.location.origin + '/Pages/postDetails/' + post._id)}`, '_blank'); setOpenMenuId(false); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-pink-500">
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.242 1.308 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.242 1.246-3.608 1.308-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.242-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608C4.515 2.497 5.783 2.225 7.149 2.163 8.415 2.105 8.795 2.163 12 2.163zm0-2.163C8.741 0 8.332.012 7.052.07 5.771.128 4.659.334 3.678 1.315c-.98.98-1.187 2.092-1.245 3.373C2.012 8.332 2 8.741 2 12c0 3.259.012 3.668.07 4.948.058 1.281.265 2.393 1.245 3.373.98.98 2.092 1.187 3.373 1.245C8.332 23.988 8.741 24 12 24s3.668-.012 4.948-.07c1.281-.058 2.393-.265 3.373-1.245.98-.98 1.187-2.092 1.245-3.373.058-1.28.07-1.689.07-4.948 0-3.259-.012-3.668-.07-4.948-.058-1.281-.265-2.393-1.245-3.373-.98-.98-2.092-1.187-3.373-1.245C15.668.012 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" /></svg>
+                            انستغرام
+                          </button>
 
-                            <button onClick={() => { navigator.clipboard.writeText(window.location.origin + '/Pages/postDetails/' + post._id); setOpenMenuId(false); toast.success('تم نسخ الرابط!'); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-cyan-700">
-                              <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
-                              نسخ الرابط
-                            </button>
-                          </div>
+                          <button onClick={() => { navigator.clipboard.writeText(window.location.origin + '/Pages/postDetails/' + post._id); setOpenMenuId(false); toast.success('تم نسخ الرابط!'); }} className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-cyan-100 text-cyan-700">
+                            <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+                            نسخ الرابط
+                          </button>
                         </div>
-                   </div>
-                  
+                      </div>
                     </div>
+                    {/* </div> */}
                     {/* حقل التعليق وعرض التعليقات */}
                     {activeCommentPostId === post._id && (
                       <div className="px-6 mt-2 mb-4">
@@ -565,6 +562,8 @@ export default function Account() {
                             </div>
                           </div>
                         )}
+
+
                       </div>
                     )}
                     {editModal.open && editModal.post?._id === post._id && (
@@ -591,14 +590,12 @@ export default function Account() {
                         </div>
                       </div>
                     )}
-
                   </div>
                 )
               })}
             </ul>
           ) : (
             <PostSkeleton count={5} />
-            // <p className="text-gray-400 text-xs md:text-sm">لا توجد منشورات حديثة.</p>
           )}
         </div>
         <div className="w-full text-center mt-6">

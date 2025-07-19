@@ -215,7 +215,7 @@ export default function Page() {
   };
   return (
     <div className={`min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 via-white to-teal-100 font-[Ruboto,sans-serif] py-10 ${theme === "dark" ? "dark" : ""}`}>
-      <div className="w-full max-w-2xl bg-white/90 rounded-3xl shadow-2xl p-8 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
+      <div className="w-full max-w-2xl bg-white/90 rounded-3xl shadow-2xl py-8 px-4 sm:px-3 border border-cyan-100 backdrop-blur-md flex flex-col items-center gap-6 relative">
         {/* Settings Dropdown */}
         <div className="absolute top-4 mt-3 right-4">
           <Link href="/" className=" justify-start px-4 py-2 bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white rounded-full font-bold shadow hover:from-cyan-400 hover:to-teal-500 transition-colors text-sm flex items-center gap-2">
@@ -614,6 +614,7 @@ export default function Page() {
             <PostSkeleton count={5} />
           )}
         </div>
+        
         <div className="w-full text-center mt-6">
           <Link href="/" className="text-cyan-700 hover:underline text-sm">العودة للصفحة الرئيسية</Link>
         </div>
