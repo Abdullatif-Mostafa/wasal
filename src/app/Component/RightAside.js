@@ -37,26 +37,25 @@ const RightAside = ({ chatMode }) => {
     dispatch(getAllUsersAsync())
   }, [dispatch]);
   return (
-    <aside className="hidden lg:block sticky top-20 h-[calc(100vh-5rem)] w-64 bg-gradient-to-br from-cyan-50 to-teal-100 border-l border-teal-200 shadow-lg rounded-2xl p-6 m-4">
+    <aside className="hidden lg:block sticky top-15 pt-20 h-[calc(100vh)] w-70 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-6 m-3">
       <div className="flex flex-col gap-3 h-full">
         {chatMode ? (
           <>
             <h2 className="text-xl font-bold text-teal-800 mb-2">قائمة الأصدقاء المتصلين</h2>
-            <ul className="space-y-2 max-h-100 overflow-y-auto">
+            <ul className="space-y-1.5 bg-white max-h-100 overflow-y-auto p-1.5 shadow">
               { users &&
                 users?.map((user) => (
-                  <li key={user._id} className="bg-white  cursor-pointer rounded-lg p-2 shadow flex items-center gap-2 justify-between">
+                  <div key={user._id} className="flex  items-center gap-2 cursor-pointer bg-cyan-50 rounded-lg p-1.5 shadow hover:bg-cyan-100 transition">
                     <div className="flex items-center gap-2">
                         <span className="w-8 h-8 rounded-full bg-teal-400 flex items-center justify-center text-white font-bold">{user.username.charAt(0)}</span>
                         <span className="text-teal-900 font-semibold">{user.username}</span>
-
                     </div>
                     <span className="w-2 h-2 rounded-full bg-green-400" title="متصل"></span>
-                  </li>
+                  </div>
                 ))
               }
             </ul>
-            <div className="mt-6 bg-white rounded-xl shadow p-4">
+            <div className="mt-1 bg-white rounded-xl shadow p-4">
               <h3 className="text-cyan-700 font-bold mb-2">نصيحة الدردشة</h3>
               <p className="text-cyan-900 text-sm">حافظ على احترام الآخرين وشارك المحادثة بإيجابية!</p>
               <p className="text-cyan-900 text-sm mt-2">تذكر أن الدردشة هي وسيلة للتواصل والتفاعل الاجتماعي.</p>

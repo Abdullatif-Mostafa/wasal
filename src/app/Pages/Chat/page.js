@@ -38,7 +38,7 @@ export default function Chat() {
   }
   useEffect(()=>{
     getingMessages()
-  },[input])
+  },[messages])
 
   // تأكد من وجود التوكن وإلا انقل المستخدم
   useEffect(() => {
@@ -92,8 +92,8 @@ export default function Chat() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 via-white to-teal-100 font-[Ruboto,sans-serif]">
-      <div className="flex w-full max-w-screen-2xl mx-auto">
+    // <div className="min-h-screen flex items-center justify-center font-[Ruboto,sans-serif]">
+      <div className="flex w-full max-w-screen-2xl mx-auto min-h-screen items-center justify-center font-[Ruboto,sans-serif]">
         <div className="hidden lg:block bg-[#f0f4f8] border-l border-[#e0e7ef] sticky top-0 h-[90vh]">
           <RightAside chatMode />
         </div>
@@ -174,6 +174,6 @@ export default function Chat() {
           <LeftAside chatMode />
         </div>
       </div>
-    </div>
+    // </div>
   );
 }
