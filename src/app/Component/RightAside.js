@@ -37,12 +37,12 @@ const RightAside = ({ chatMode }) => {
     dispatch(getAllUsersAsync())
   }, [dispatch]);
   return (
-    <aside className="hidden lg:block sticky top-15 pt-20 h-[calc(100vh)] w-70 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-6 m-3">
-      <div className="flex flex-col gap-3 h-full">
+    <aside className="hidden lg:block sticky top-15 pt-5 h-[calc(100vh)] w-74 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-4 ">
+      <div className="flex flex-col gap-0 h-full">
         {chatMode ? (
-          <>
-            <h2 className="text-xl font-bold text-teal-800 mb-2">قائمة الأصدقاء المتصلين</h2>
-            <ul className="space-y-1.5 bg-white max-h-100 overflow-y-auto p-1.5 shadow">
+          <div className="mt-2 pt-3">
+            <h2 className="text-xl font-bold pt-6 text-teal-800 mb-2">قائمة الأصدقاء المتصلين</h2>
+            <ul className="space-y-1.5 bg-white max-h-130 overflow-y-auto p-1.5 shadow">
               { users &&
                 users?.map((user) => (
                   <div key={user._id} className="flex  items-center gap-2 cursor-pointer bg-cyan-50 rounded-lg p-1.5 shadow hover:bg-cyan-100 transition">
@@ -55,16 +55,16 @@ const RightAside = ({ chatMode }) => {
                 ))
               }
             </ul>
-            <div className="mt-1 bg-white rounded-xl shadow p-4">
+            {/* <div className="mt-1 bg-white rounded-xl shadow p-4">
               <h3 className="text-cyan-700 font-bold mb-2">نصيحة الدردشة</h3>
               <p className="text-cyan-900 text-sm">حافظ على احترام الآخرين وشارك المحادثة بإيجابية!</p>
               <p className="text-cyan-900 text-sm mt-2">تذكر أن الدردشة هي وسيلة للتواصل والتفاعل الاجتماعي.</p>
-            </div>
-          </>
+            </div> */}
+          </div>
         ) : (
           <>
             {/* Search Bar */}
-            <div className="relative mb-0">
+            <div className="relative mb-0 mt-3">
               <input
                 type="text"
                 value={search}
@@ -75,7 +75,7 @@ const RightAside = ({ chatMode }) => {
               <FaSearch className="absolute left-3 top-3 text-cyan-400" />
             </div>
             {/* Suggested Friends */}
-            <div className="mt-auto min-h-35">
+            <div className="mt-4 min-h-35">
               <h2 className="text-xl font-bold text-teal-800 mb-2 flex items-center gap-2"><FaUserFriends className="text-cyan-400" /> الأصدقاء المقترحون</h2>
               <ul className="space-y-1">
                 {filteredFriends.length ? filteredFriends.map((f, i) => (
@@ -90,7 +90,7 @@ const RightAside = ({ chatMode }) => {
               </ul>
             </div>
             {/* Recent Chats */}
-            <div className="mt-auto">
+            <div className="mt-4">
               <h3 className=" text-lg font-bold text-cyan-800 mb-2 flex items-center gap-2"><FaCommentDots className="text-cyan-400" /> الدردشات الأخيرة</h3>
               <ul className="space-y-2">
                 {recentChats.map((chat, i) => (
@@ -106,7 +106,7 @@ const RightAside = ({ chatMode }) => {
               </ul>
             </div>
             {/* Tips Section */}
-            <div className="mt-auto bg-white rounded-xl shadow p-3">
+            <div className="mt-4 bg-white rounded-xl shadow p-3">
               <h4 className="text-cyan-700 font-bold mb-1 flex items-center gap-1"><FaUserPlus className="text-cyan-400" /> نصيحة سريعة</h4>
               <p className="text-cyan-900 text-sm">تواصل مع أصدقاء جدد وابدأ محادثة اليوم!</p>
             </div>

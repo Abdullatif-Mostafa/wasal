@@ -22,8 +22,8 @@ const updates = [
 ];
 const randomTip = tips[Math.floor(Math.random() * tips.length)];
 const LeftAside = ({ chatMode }) => (
-  <aside className="hidden lg:block sticky top-10 pt-10 h-[calc(100vh)] w-64 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-6 m-3">
-    <div className="flex flex-col gap-6 h-full">
+  <aside className="hidden lg:block sticky top-10 pt-5 h-[calc(100vh)] w-74 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-6 m-3">
+    <div className="flex flex-col gap-3 pt-0 h-full">
       {chatMode ? (
         <>
           <h2 className="text-xl font-bold text-teal-800 mb-0">معلومات الدردشة</h2>
@@ -54,12 +54,17 @@ const LeftAside = ({ chatMode }) => (
                 <FaLightbulb className="text-cyan-400" />
                 <span className="text-cyan-900 font-semibold">نصائح يومية</span>
               </li>
+                {/* {تعلم البرمجه/*  */} 
+              <li className="flex cursor-pointer items-center gap-2 bg-cyan-50 rounded-lg p-2 shadow hover:bg-cyan-100 transition">
+                <FaRegNewspaper className="text-cyan-400" />
+                <span className="text-cyan-900 font-semibold">تعلم البرمجه</span>
+              </li>
             </ul>
           </div>
         </>
       ) : (
         <>
-          <div className="sticky top-10">
+          <div className="sticky top-0">
             <ul className="space-y-1.5">
               <li>
                 <Link href="/Pages/Account" className="flex items-center gap-2 bg-white rounded-lg p-2 shadow hover:bg-cyan-50 text-cyan-900 font-semibold transition">

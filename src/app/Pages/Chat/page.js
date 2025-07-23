@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import RightAside from "../../Component/RightAside";
 import LeftAside from "../../Component/LeftAside";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { fetchMessagesForConversation } from "@/RTK/Reducers/chatSlice";
 
 const metadata={
   title:"المحادثات",
@@ -13,34 +14,39 @@ const metadata={
 const SOCKET_URL = "http://localhost:4000";
 
 export default function Chat() {
-  const [messages, setMessages] = useState([]);
+  const [localMessages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const router = useRouter();
   const [isConnected, setIsConnected] = useState(false);
   const messagesEndRef = useRef(null);
   const socketRef = useRef(null);
   const { user, isAuthenticated } = useSelector((state) => state.auth);
-
-  const getingMessages=async()=>{
-    fetch('http://localhost:4000/api/messages/6851982403af215b4a14c015')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("messages data",data);
-        if (data.status === "success") {
-          setMessages(data.messages);
-        } else {
-          console.error("Error fetching messages:", data.message);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching messages:", error);
-      });
-  }
-  useEffect(()=>{
-    getingMessages()
-  },[messages])
+  const {messages}=useSelector((state)=>state.chat);
+  console.log("messages in chat page",messages);
+ const dispatsh=useDispatch();
+  // const getingMessages=async()=>{
+  //  await fetch('http://localhost:4000/api/messages/6851982403af215b4a14c015')
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log("messages data",data);
+  //       if (data.status === "success") {
+  //         setMessages(data.messages);
+  //       } else {
+  //         console.error("Error fetching messages:", data.message);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching messages:", error);
+  //     });
+  // }
+  // useEffect(()=>{
+  //   getingMessages()
+  // },[messages])
 
   // تأكد من وجود التوكن وإلا انقل المستخدم
+  useEffect(() => {
+    dispatsh(fetchMessagesForConversation('6851982403af215b4a14c015'));
+  },[dispatsh])
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -78,12 +84,12 @@ export default function Chat() {
   }, [messages]);
 
   // إرسال رسالة
-  const sendMessage = (e) => {
+  const gandleSendMessage = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
     console.log("input ==== ",input)
     const dummyConversationId = "6851982403af215b4a14c015"; 
-
+    
     socketRef.current.emit("send-message", {
       conversationId: dummyConversationId,
       content: input,
@@ -151,7 +157,7 @@ export default function Chat() {
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={sendMessage} className="flex gap-2 mt-auto">
+            <form onSubmit={gandleSendMessage} className="flex gap-2 mt-auto">
               <input
                 className="flex-1 px-4 py-2 border border-teal-400 rounded-full focus:outline-none focus:ring-2 focus:ring-teal-500 text-right bg-white/90 dark:bg-gray-900/80 text-black dark:text-white shadow"
                 placeholder="اكتب رسالتك..."

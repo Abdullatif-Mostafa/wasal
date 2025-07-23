@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import PostSkeleton from "@/app/Component/Skeletons/PostSkeleton";
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from "@/RTK/Reducers/commentSlice";
+import NoInternet from "@/app/Component/NoInternet";
 
 const PostPage = () => {
   const dispatch = useDispatch();
@@ -29,12 +30,12 @@ const PostPage = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
     const API_URL =process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app" ;
 
-useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/Pages/Login');
-    }
-  }, []);
+// useEffect(() => {
+//     const token = localStorage.getItem('token');
+//     if (!token) {
+//       router.push('/Pages/Login');
+//     }
+//   }, []);
   useEffect(() => {
     if (postId) {
       dispatch(fetchPostById(postId));
@@ -152,13 +153,16 @@ useEffect(() => {
         toast.error("فشل في الإعجاب");
       });
   };
+const text="تعذر تحميل المنشور"
   // if (loading) return <div className="text-center text-teal-600 font-bold text-xl mt-10">جاري التحميل...</div>;
   if (loading) return (
     <div className="text-center flex w-full h-full mx-auto space-y-10 mt-25 sm:mt-30 sm:w-full items-center justify-center  text-teal-600 font-bold text-xl">
       <PostSkeleton count={1} />
     </div>
   );
-  if (error) return <div style={{ height: "100vh" }} className="text-center flex w-full h-full mx-auto space-y-10 mt-15 sm:mt-16 sm:w-full items-center justify-center  text-red-600 font-bold text-xl">{error}</div>;
+  if (error) return <div style={{ height: "100vh" }} className="text-center flex w-full h-full mx-auto space-y-10 mt-15 sm:mt-16 sm:w-full items-center justify-center  text-red-600 font-bold text-xl">
+      <NoInternet text={text}/>
+  </div>;
   if (!selectedPost) return <div className="text-center hidden text-gray-500 font-bold text-lg mt-10">لا يوجد منشور</div>;
   return (
     <>
