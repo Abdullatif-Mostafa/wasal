@@ -11,14 +11,16 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import PostSkeleton from "@/app/Component/Skeletons/PostSkeleton";
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from "@/RTK/Reducers/commentSlice";
+import { editUserByIdAsync } from "@/RTK/Reducers/userSlice";
 const metadata = {
   title: "صفحه الحساب ",
   description: " وكذلك تعرض بيانات المستخدم الشخصيه صفحه الحساب تعرض جميع المنشورات والتعليقات التي تم انشائها من قبل المستخدم."
 }
 export default function Account() {
   const { user, isAuthenticated } = useSelector((state) => state.auth)
-  const { posts } = useSelector((state) => state.posts)
-  console.log("posts in account page", posts);
+  // const { posts ,selectedPost } = useSelector((state) => state.posts)
+  // console.log("posts in account page", posts);
+  // console.log("selectedPost in account page", selectedPost);
   const router = useRouter();
   const [editModal, setEditModal] = useState({ open: false, post: null });
   const [showEdit, setShowEdit] = useState(false);
@@ -34,15 +36,15 @@ export default function Account() {
   const [theme, setTheme] = useState("light");
   const API_URL = process.env.REACT_APP_API_URL || "https://wasal-api-production.up.railway.app";
   const userId = user?._id;
-  console.log("userId ", userId);
+  // console.log("user ========", user);
   // console.log("posts by user", selectedPost);
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/Pages/Login');
-    }
-  }, []);
-
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     router.push('/Pages/Login');
+  //   }
+  // }, []);
+  const { posts, loading, error } = useSelector((state) => state.posts);
   useEffect(() => {
     dispatch(fetchPostsByUserId(userId));
   }, [dispatch, userId]);
@@ -81,7 +83,11 @@ export default function Account() {
 
   // Edit modal logic
   const handleEditChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value, files} = e.target;
+    console.log("name ===", name)
+    console.log("value ===",value)
+    console.log("files ",files);
+    // console.log("e.target ",e.target)
     if (name === "profileImage" && files && files[0]) {
       setPreviewImg(URL.createObjectURL(files[0]));
       setEditData({ ...editData, profileImage: files[0] });
@@ -93,8 +99,13 @@ export default function Account() {
     e.preventDefault();
     // هنا يمكنك إضافة منطق إرسال البيانات إلى الخادم
     // على سبيل المثال، يمكنك استخدام fetch أو axios لإرسال البيانات
-    toast.success("تم تحديث الحساب بنجاح!");
-    setShowEdit(false);
+    dispatch(editUserByIdAsync(editData))
+      .unwrap()
+      .then(() => {
+        toast.success("تم تحديث الحساب بنجاح!")
+        setShowEdit(false);
+      })
+    // setShowEdit(false);
   };
   const handleSubmitComment = (postId) => {
     if (!commentText.trim()) return;
@@ -601,41 +612,68 @@ export default function Account() {
         <div className="w-full text-center mt-6">
           <Link href="/" className="text-cyan-700 hover:underline text-sm">العودة للصفحة الرئيسية</Link>
         </div>
+          {/* <div style={{ backgroundColor: "transparent", maxHeight: "100vh", width: "100%" }} className="fixed top-5 flex items-center justify-center  inset-0 z-40">
+            <div className="inset-5 w-sm animate-fade-in"> */}
         {/* Edit Modal */}
-        {showEdit && (
-          <div style={{ backgroundColor: "transparent", maxHeight: "100vh", width: "100%" }} className="fixed top-5 flex items-center justify-center  inset-0 z-40">
-            <div className="inset-5 w-sm animate-fade-in">
-              <div className="bg-white w-full rounded-2xl shadow-2xl p-8 relative">
-                <button className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl cursor-pointer" onClick={() => setShowEdit(false)} title="إغلاق"><FaTimes /></button>
-                <h2 className="text-2xl font-bold text-teal-700 mb-4">تعديل الحساب</h2>
-                <form onSubmit={handleEditSubmit} className="flex flex-col gap-4">
+       {showEdit && (
+          <div
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", width: "100%", zIndex: 9999 }} 
+            className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8"
+          >
+            <div className="w-full max-w-sm sm:max-w-md md:max-w-lg animate-fade-in inset-5">
+              <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 relative"> {/* Padding متجاوب */}
+                <button
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-red-500 text-xl cursor-pointer" // حجم ومكان الزر متجاوب
+                  onClick={() => setShowEdit(false)}
+                  title="إغلاق"
+                >
+                  <FaTimes />
+                </button>
+                <h2 className="text-xl sm:text-2xl font-bold text-teal-700 mb-4 sm:mb-6"> {/* حجم خط العنوان متجاوب */}
+                  تعديل الحساب
+                </h2>
+                <form onSubmit={handleEditSubmit} className="flex flex-col gap-3 sm:gap-4"> {/* مسافات بين العناصر متجاوبة */}
                   <div className="flex flex-col items-center gap-2">
                     <label htmlFor="profileImage" className="cursor-pointer">
-                      <div className="w-20 h-20 rounded-full bg-cyan-100 flex items-center justify-center overflow-hidden">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-cyan-100 flex items-center justify-center overflow-hidden"> {/* حجم صورة البروفايل متجاوب */}
                         {previewImg ? (
-                          <img src={previewImg} alt="معاينة الصورة" width={80} height={80} className="object-cover rounded-full" />
+                          <img
+                            src={previewImg}
+                            alt="معاينة الصورة"
+                            width={80}
+                            height={80}
+                            className="object-cover rounded-full w-full h-full" // تأكد إن الصورة بتملأ الـ div بتاعها
+                          />
                         ) : (
-                          <FaUserCircle className="text-4xl text-cyan-400" />
-                        )}
-                      </div>
-                      <input type="file" id="profileImage" name="profileImage" accept="image/*" className="hidden" onChange={handleEditChange} />
+                          <FaUserCircle className="text-4xl sm:text-5xl text-cyan-400" />) 
+                         } </div>
+                      <input
+                        type="file"
+                        id="profileImage"
+                        name="profileImage"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleEditChange}
+                      />
                     </label>
                   </div>
+                  {/* اسم المستخدم  */}
                   <input
                     type="text"
                     name="username"
                     value={editData?.username}
                     onChange={handleEditChange}
-                    className="border rounded-lg p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                    className="border rounded-lg p-2 sm:p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base sm:text-lg" // حجم الخط و الـ padding متجاوب
                     placeholder="اسم المستخدم"
                     required
                   />
+                  {/* البريد الإلكتروني */}
                   <input
                     type="email"
                     name="email"
                     value={editData.email}
                     onChange={handleEditChange}
-                    className="border rounded-lg p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                    className="border rounded-lg p-2 sm:p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base sm:text-lg" // حجم الخط و الـ padding متجاوب
                     placeholder="البريد الإلكتروني"
                     required
                   />
@@ -643,11 +681,16 @@ export default function Account() {
                     name="bio"
                     value={editData.bio}
                     onChange={handleEditChange}
-                    className="border rounded-lg text-gray-700 p-2 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                    className="border rounded-lg text-gray-700 p-2 sm:p-3 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base sm:text-lg" // حجم الخط و الـ padding متجاوب
                     placeholder="نبذة عنك"
                     rows={3}
                   />
-                  <button type="submit" className="bg-gradient-to-r from-teal-500 cursor-pointer via-cyan-400 to-teal-400 text-white font-bold rounded-full py-2 mt-2 hover:from-cyan-400 hover:to-teal-500 transition-colors">حفظ التغييرات</button>
+                  <button
+                    type="submit"
+                    className="bg-gradient-to-r from-teal-500 cursor-pointer via-cyan-400 to-teal-400 text-white font-bold rounded-full py-2 sm:py-3 mt-2 sm:mt-3 hover:from-cyan-400 hover:to-teal-500 transition-colors text-base sm:text-lg" // حجم الخط و الـ padding متجاوب
+                  >
+                    حفظ التغييرات
+                  </button>
                 </form>
               </div>
             </div>
@@ -655,5 +698,5 @@ export default function Account() {
         )}
       </div>
     </div>
-  );
+  )
 }

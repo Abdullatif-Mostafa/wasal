@@ -38,6 +38,8 @@ export const fetchPostById = createAsyncThunk(
 export const fetchPostsByUserId = createAsyncThunk(
   'post/fetchPostsByUserId',
   async (userId) => {
+    console.log("Fetching posts for user ID:", userId);
+    if (!userId) throw new Error('معرف المستخدم غير صالح');
     const res = await fetch(`${API_URL}/api/posts/${userId}/posts`);
     if (!res.ok) throw new Error(' فشل في جلب المنشورات للمستخدم');
     const data = await res.json();

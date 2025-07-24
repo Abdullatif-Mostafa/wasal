@@ -53,16 +53,22 @@ export const getUserByIdAsync = createAsyncThunk(
 export const editUserByIdAsync = createAsyncThunk(
   'users/editUserById',
   async (userData, { rejectWithValue }) => {
+    console.log("userData in editUserByIdAsync", userData);
+    console.log("userData.id in editUserByIdAsync", userData._id);
     try {
-      const res = await fetch(`${API_URL}/api/users/${userData.id}`, {
+      // const res = await fetch(`${API_URL}/api/users/${userData.id}`, {
+      const res = await fetch(`http://localhost:4000/api/users/${userData._id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' ,
+                'Authorization': `Bearer ${localStorage?.getItem('token')}`
+                },
         body: JSON.stringify(userData),
       });
       const data = await res.json();
       if (!res.ok || data.status !== 'success') {
         return rejectWithValue(data.data?.message || 'فشل تعديل المستخدم');
       }
+      console.log("user from useSlice -=-=---=", data.data);
       return data.data;
     } catch (error) {
       return rejectWithValue('فشل تعديل المستخدم');
