@@ -57,7 +57,7 @@ export const editUserByIdAsync = createAsyncThunk(
     console.log("userData.id in editUserByIdAsync", userData._id);
     try {
       // const res = await fetch(`${API_URL}/api/users/${userData.id}`, {
-      const res = await fetch(`http://localhost:4000/api/users/${userData._id}`, {
+      const res = await fetch(`${API_URL}/api/users/${userData._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' ,
                 'Authorization': `Bearer ${localStorage?.getItem('token')}`
@@ -103,6 +103,7 @@ export const changeMyPasswordAsync = createAsyncThunk(
     }
   }
 )
+
 // Delete user by id
 export const deleteUserByIdAsync = createAsyncThunk(
   'users/deleteUserById',

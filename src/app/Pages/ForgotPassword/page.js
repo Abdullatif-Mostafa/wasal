@@ -10,17 +10,45 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+const API_URL = "http://localhost:4000/api/posts";
+// const API_URL = process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app";
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => { 
     e.preventDefault();
     if (!email) {
-      setError("يرجى إدخال البريد الإلكتروني");
+      setError("يرجى إدخال البريد الإلكتروني.");
       setSuccess("");
       return;
     }
-    // تنفيذ منطق إرسال رابط إعادة تعيين كلمة المرور هنا
+    setLoading(true); 
     setError("");
-    setSuccess("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني إذا كان مسجلاً.");
+    setSuccess(""); 
+    try {
+      const response = await fetch(`${API_URL}/auth/forgot-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess(data.message);
+        // ممكن توجه المستخدم لصفحة تأكيد لو عايز
+        // router.push('/forgot-password-sent');
+      } else {
+        // ده لو السيرفر رجع status 400/500
+        setError(data.message || 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.');
+      }
+    } catch (err) {
+      console.error('Network error or server unreachable:', err);
+      setError('لا يمكن الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت.');
+    } finally {
+      setLoading(false); // إنهاء التحميل
+    }
   };
 
   return (
