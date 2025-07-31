@@ -22,7 +22,7 @@ const updates = [
 ];
 const randomTip = tips[Math.floor(Math.random() * tips.length)];
 const LeftAside = ({ chatMode }) => (
-  <aside className="hidden lg:block sticky top-10 pt-5 h-[calc(100vh)] w-74 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-6 m-3">
+  <aside className="hidden lg:block sticky top-10 pt-5 h-[calc(100vh)] w-74 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-4">
     <div className="flex flex-col gap-3 pt-0 h-full">
       {chatMode ? (
         <>

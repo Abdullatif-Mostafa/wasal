@@ -37,7 +37,7 @@ const RightAside = ({ chatMode }) => {
     dispatch(getAllUsersAsync())
   }, [dispatch]);
   return (
-    <aside className="hidden lg:block sticky top-15 pt-5 h-[calc(100vh)] w-74 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-4 ">
+    <aside className="hidden lg:block sticky top-15 pt-5 h-[calc(100vh)] w-74 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200 shadow-lg rounded-2xl p-4">
       <div className="flex flex-col gap-0 h-full">
         {chatMode ? (
           <div className="mt-2 pt-3">

@@ -38,17 +38,18 @@ export const registerAsync = createAsyncThunk(
   'auth/register',
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await fetch(`${API_URL}/api/auth/register}`, {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
       const data = await res.json();
+      console.log("register data", data);
+
       if (!res.ok || data.status !== 'success') {
         return rejectWithValue(data.data?.message || 'فشل إنشاء الحساب');
       }
 
-      // تخزين البيانات في localStorage
       localStorage.setItem('token', data.data.token);
       localStorage.setItem('user', JSON.stringify(data.data.user));
 
@@ -61,7 +62,51 @@ export const registerAsync = createAsyncThunk(
     }
   }
 );
-
+// forget password
+export const forgetPasswordAsync = createAsyncThunk(
+  'auth/forgetPassword',
+  async (email, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`${API_URL}/api/auth/forgetPassword`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      console.log("forgetPassword data", data);
+      if (!res.ok || data.status !== 'success') {
+        return rejectWithValue(data.data?.message || 'فشل في إرسال رابط إعادة تعيين كلمة المرور');
+      }
+      return data.message;
+    } catch (error) {
+      return rejectWithValue('فشل في إرسال رابط إعادة تعيين كلمة المرور');
+    }
+  }
+);
+// reset password
+export const resetPasswordAsync = createAsyncThunk(
+  'auth/resetPassword',
+  async ({ token, newPassword }, { rejectWithValue }) => {
+    console.log("resetPasswordAsync called with token:", token)
+    console.log("newPassword:", newPassword)
+    try {
+      const res = await fetch(`${API_URL}/api/auth/resetPassword`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token, newPassword }),
+      });
+      const data = await res.json();
+      console.log("resetPassword data =====", data);
+      console.log("data.message", data.message)
+      if (!res.ok || data.status !== 'success') {
+        return rejectWithValue(data?.message || 'فشل في تغيير كلمة المرور');
+      }
+      return data.message;
+    } catch (error) {
+      return rejectWithValue('فشل في تغيير كلمة المرور');
+    }
+  }
+);
 const initialState = {
   isAuthenticated: false,
   token: null,
@@ -92,7 +137,6 @@ const authSlice = createSlice({
     setAuthError(state, action) {
       state.error = action.payload;
     },
-    // ✅ تحميل بيانات المستخدم من localStorage عند بدء التطبيق
     loadUserFromStorage(state) {
       const token = localStorage.getItem('token');
       const user = localStorage.getItem('user');
@@ -133,6 +177,30 @@ const authSlice = createSlice({
         state.user = action.payload.user;
       })
       .addCase(registerAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(forgetPasswordAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(forgetPasswordAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(forgetPasswordAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(resetPasswordAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(resetPasswordAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(resetPasswordAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

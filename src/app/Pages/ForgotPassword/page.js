@@ -2,53 +2,41 @@
 import { useState } from "react";
 import { FaEnvelope, FaUnlockAlt } from "react-icons/fa";
 import Link from "next/link";
-const metadata={
-  title:"نسيت كلمه المرور",
-  description:" صفحه عرض نسيت كلمه المرور وتمكني من اعاده تعيينها"
+import { forgetPasswordAsync } from "@/RTK/Reducers/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+const metadata = {
+  title: "نسيت كلمه المرور",
+  description: " صفحه عرض نسيت كلمه المرور وتمكني من اعاده تعيينها"
 }
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-const API_URL = "http://localhost:4000/api/posts";
-// const API_URL = process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app";
-
- const handleSubmit = async (e) => { 
+  const {loading}=useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!email) {
-      setError("يرجى إدخال البريد الإلكتروني.");
+      setError("يرجى إدخال البريد الإلكتروني");
       setSuccess("");
       return;
     }
-    setLoading(true); 
-    setError("");
-    setSuccess(""); 
-    try {
-      const response = await fetch(`${API_URL}/auth/forgot-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
+
+    // تنفيذ منطق إرسال رابط إعادة تعيين كلمة المرور هنا
+    // على سبيل المثال، يمكنك استخدام fetch لإرسال طلب إلى السيرفر
+    dispatch(forgetPasswordAsync(email))
+      .unwrap()
+      .then(() => {
+        setError("");
+        setSuccess("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني إذا كان مسجلاً.");
+        setEmail("");
+      })
+      .catch((err) => {
+        setError(err);
+        setSuccess("");
       });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSuccess(data.message);
-        // ممكن توجه المستخدم لصفحة تأكيد لو عايز
-        // router.push('/forgot-password-sent');
-      } else {
-        // ده لو السيرفر رجع status 400/500
-        setError(data.message || 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.');
-      }
-    } catch (err) {
-      console.error('Network error or server unreachable:', err);
-      setError('لا يمكن الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت.');
-    } finally {
-      setLoading(false); // إنهاء التحميل
-    }
+    // setError("");
+    // setSuccess("تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني إذا كان مسجلاً.");
   };
 
   return (
@@ -74,7 +62,7 @@ const API_URL = "http://localhost:4000/api/posts";
             required
           />
         </div>
-        <button type="submit" className="w-full py-3 bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white font-bold rounded-xl shadow-lg hover:from-cyan-400 hover:to-teal-500 transition-colors text-lg cursor-pointer">إرسال رابط إعادة التعيين</button>
+        <button type="submit" className="w-full py-3 bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 text-white font-bold rounded-xl shadow-lg hover:from-cyan-400 hover:to-teal-500 transition-colors text-lg cursor-pointer"> {loading ? "جاري الارسال..." : " ارسال " }</button>
         <div className="mt-4 text-center">
           <Link href="/Pages/Login" className="text-cyan-700 hover:underline text-sm">العودة لتسجيل الدخول</Link>
         </div>
