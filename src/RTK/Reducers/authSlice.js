@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://wasal-api-production.up.railway.app"  ;
-const API_URL = process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app";
+const API_URL = process.env.REACT_APP_API_URL || "https://wasal-api-production.up.railway.app";
 // Async thunk for login
 export const loginAsync = createAsyncThunk(
   'auth/login',
@@ -107,6 +107,54 @@ export const resetPasswordAsync = createAsyncThunk(
     }
   }
 );
+// change my password
+export const changeMyPasswordAsync = createAsyncThunk(
+  'users/changeMyPassword',
+  async (passwordData, { rejectWithValue }) => {
+    const { oldPassword, newPassword } = passwordData;
+    console.log("oldPassword , newPassword  ", oldPassword, newPassword);
+    console.log("token in change my password", localStorage.getItem('token'));
+    try {
+      const res = await fetch(`${API_URL}/api/auth/changePassword`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage?.getItem('token')}`
+        },
+        body: JSON.stringify({ oldPassword, newPassword }),
+      });
+      const data = await res.json();
+      console.log("data in change my password", data)
+
+      if (!res.ok || data.status !== 'success') {
+        return rejectWithValue(data?.message || 'فشل تغيير كلمة المرور');
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue('فشل تغيير كلمة المرور');
+    }
+  }
+)
+// delete my account
+export const deleteMyAccountAsync = createAsyncThunk(
+  'users/deleteMyAccount',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await fetch(`${API_URL}/api/users/me`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      const data = await res.json();
+      console.log("data in delete my account", data)
+      if (!res.ok || data.status !== 'success') {
+        return rejectWithValue(data?.message || 'فشل حذف الحساب');
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue('فشل حذف الحساب');
+    }
+  }
+);
 const initialState = {
   isAuthenticated: false,
   token: null,
@@ -203,7 +251,37 @@ const authSlice = createSlice({
       .addCase(resetPasswordAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      // Change my password
+      .addCase(changeMyPasswordAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(changeMyPasswordAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("Password change success:", action.payload.message);
+      })
+      .addCase(changeMyPasswordAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // delete my account
+      .addCase(deleteMyAccountAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteMyAccountAsync.fulfilled, (state, action) => {
+        console.log(" action payload ", action)
+        state.loading = false;
+        state.users = state.users.filter(user => user._id !== action.payload);
+        if (state.selectedUser && state.selectedUser._id === action.payload) {
+          state.selectedUser = null;
+        }
+      })
+      .addCase(deleteMyAccountAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 

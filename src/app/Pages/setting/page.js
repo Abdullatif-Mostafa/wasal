@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import { FaMoon, FaSun, FaBell, FaUserShield, FaLock, FaLanguage, FaPalette, FaUserEdit, FaTrashAlt, FaChevronDown, FaChevronUp, FaLightbulb, FaChevronLeft, FaArrowLeft } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "@/RTK/Reducers/authSlice";
+import { deleteMyAccountAsync, logout } from "@/RTK/Reducers/authSlice";
 import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import Swal from 'sweetalert2';
-import { deleteMyAccountAsync, deleteUserByIdAsync } from "@/RTK/Reducers/userSlice";
+import {  deleteUserByIdAsync } from "@/RTK/Reducers/userSlice";
 import { useRouter } from "next/navigation";
 
 const languages = [

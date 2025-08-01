@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // https://tarmeezacademy.com/api/v1/posts
 // const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://wasal-api-production.up.railway.app" ;  
 const API_URL = process.env.REACT_APP_API_URL ||"https://wasal-api-production.up.railway.app";
-console.log("API_URL in postSlice", API_URL);
+// console.log("API_URL in postSlice", API_URL);
 export const fetchPosts = createAsyncThunk(
   'post/fetchPosts',
   async (_, thunkAPI) => {
