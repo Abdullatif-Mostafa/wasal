@@ -289,6 +289,7 @@ const Posts = ({ newPosts = [] }) => {
                   <p className="text-lg font-semibold mb-2 text-teal-800">{post.description}</p>
                   {/* <p className="text-gray-700 mb-2 break-words leading-relaxed">{post.description || "لا يوجد محتوى"}</p> */}
                 </div>
+                  <>
                 {post.image && (
                   <div className="w-full border-none">
                     <img
@@ -302,6 +303,15 @@ const Posts = ({ newPosts = [] }) => {
                     />
                   </div>
                 )}
+                {post.video &&(
+                  <div className="w-full border-none">
+                    <video controls className="max-h-75 object-cover w-full border border-teal-200">
+                      <source src={post.video} type="video/mp4 " />
+                    </video>
+                  </div>
+                )
+                }
+                  </>
               </Link>
               <div className="flex justify-between gap-0 border-t pt-3 px-0 pb-4 bg-cyan-50 rounded-b-2xl">
                 {/*اعجاب  */}
