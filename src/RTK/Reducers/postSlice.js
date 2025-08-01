@@ -53,7 +53,7 @@ export const addPostAsync = createAsyncThunk(
     const res = await fetch(`${API_URL}/api/posts`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`
       },
       body: formData,
     });
