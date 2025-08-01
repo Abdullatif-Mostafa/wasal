@@ -143,7 +143,7 @@ const CreatePost = ({ onPost }) => {
         <button
           className="flex items-center cursor-pointer gap-2 px-5 py-2 bg-gradient-to-r from-teal-500 via-cyan-400 to-teal-400 hover:from-cyan-400 hover:to-teal-500 text-white font-bold rounded-full shadow transition-colors duration-200 disabled:opacity-60"
           onClick={handlePostSubmit}
-          disabled={Localloading || (!postText && !image)}
+          disabled={Localloading || (!postText && !image && !video)}
         >
           <FaPaperPlane className="w-4 h-4 cursor-pointer" />
           {Localloading ? "جاري النشر..." : "نشر"}

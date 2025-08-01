@@ -1,6 +1,6 @@
 "use client";
 import { deletePostAsync, editPostAsync, fetchPostById, fetchPosts, getLikesForPost, getPostLikes, toggleLikeOnPost, updateLikesInMap, updateLikesInPosts } from "@/RTK/Reducers/postSlice";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2';
@@ -9,7 +9,6 @@ import Link from "next/link";
 import { deleteCommentAsync, editCommentAsync, getCommentsForPost, submitComment } from "@/RTK/Reducers/commentSlice";
 import PostSkeleton from "./Skeletons/PostSkeleton";
 import NoInternet from "./NoInternet";
-// import Image from "next/image";
 const metadata = {
   title: "المنشورات",
   description: "صفحة المنشورات تعرض جميع المنشورات الخاصة بموقع وصال والتي تعرض جميع منشورات الاصدقاء الموجودين ععلي الموقع."
@@ -147,7 +146,7 @@ const Posts = ({ newPosts = [] }) => {
     {/* <p style={{ width: "", backgroundColor: "" }} className="sm:w-1/2 lg:w-1/1.5 md:w-1/2.5 bg-gradient-to-br from-cyan-50 to-teal-100 border-r border-teal-200  text-center  text-cyan-600 font-normal text-xl  rounded-lg p-6 shadow-md mt-15">
     {"لا يوجد اتصال بالانترنت . تعذر تحميل المنشورات يرجي التحقق من اتصالك بالانترنت واعاده المحاولة .."}
   </p> */}
-    <NoInternet text={text} />
+  <NoInternet text={text} />
   </div>;
   // if (!allPosts.length) return <div style={{ height: "100vh" }} className="w-full h-full text-center text-teal-600 font-bold text-lg rounded-lg p-6 shadow-md mt-7">لا توجد منشورات</div>;
   return (
@@ -188,6 +187,7 @@ const Posts = ({ newPosts = [] }) => {
                         <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                         حفظ المنشور
                       </button>
+
                       {post.image && (
                         <a
                           href={post.image.startsWith('http') ? post.image : `http://localhost:4000/${post.image}`}
@@ -197,6 +197,16 @@ const Posts = ({ newPosts = [] }) => {
                         >
                           <svg className="w-5 h-5 font-bold text-teal-900" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" /></svg>
                           تنزيل الصورة
+                        </a>
+                      )}
+                      {post.video && (
+                        <a
+                          href={post.video.startsWith('http') ? post.video : `http://localhost:4000/${post.video}`}
+                          download className="flex items-center gap-2 bg-white cursor-pointer rounded-lg p-2 shadow hover:bg-cyan-50 text-cyan-900 font-semibold transition"
+                          onClick={() => { toast.success("تم تنزيل الفيديو بنجاح!"); setOpenMenuId(false); }}
+                        >
+                          <svg className="w-5 h-5 font-bold text-teal-900" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" /></svg>
+                          تنزيل الفيديو
                         </a>
                       )}
                       <button className="flex items-center gap-2 bg-white cursor-pointer rounded-lg p-2 shadow hover:bg-cyan-50 text-cyan-900 font-semibold transition" onClick={() => { toast.success("تمت مشاركة المنشور!"); setOpenMenuId(false); }}>
@@ -289,7 +299,7 @@ const Posts = ({ newPosts = [] }) => {
                   <p className="text-lg font-semibold mb-2 text-teal-800">{post.description}</p>
                   {/* <p className="text-gray-700 mb-2 break-words leading-relaxed">{post.description || "لا يوجد محتوى"}</p> */}
                 </div>
-                  <>
+                  
                 {post.image && (
                   <div className="w-full border-none">
                     <img
@@ -305,13 +315,14 @@ const Posts = ({ newPosts = [] }) => {
                 )}
                 {post.video &&(
                   <div className="w-full border-none">
-                    <video controls className="max-h-75 object-cover w-full border border-teal-200">
-                      <source src={post.video} type="video/mp4 " />
+                    <video controls className="max-h-75 object-cover w-full border border-teal-200"
+                      src={post.video.startsWith('http')  ? post.video : `${API_URL}/${post.video.replace(/\\/g, '/')}`}>
+                      {/* <source src={post.video} type="video/mp4 " /> */}
                     </video>
                   </div>
                 )
                 }
-                  </>
+                  
               </Link>
               <div className="flex justify-between gap-0 border-t pt-3 px-0 pb-4 bg-cyan-50 rounded-b-2xl">
                 {/*اعجاب  */}

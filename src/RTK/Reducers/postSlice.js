@@ -50,7 +50,8 @@ export const fetchPostsByUserId = createAsyncThunk(
 export const addPostAsync = createAsyncThunk(
   'post/addPost',
   async ({ formData, token }) => {
-    const res = await fetch(`${API_URL}/api/posts`, {
+    console.log("Adding post with formData:", formData);
+    const res = await fetch('http://localahost:4000/api/posts', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`
